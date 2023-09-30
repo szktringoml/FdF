@@ -1,25 +1,34 @@
 SRCS = fdf.c \
-		draw.c \
-		libft/ft_split.c \
-		libft/ft_atoi.c  \
+	   draw.c \
+	
 
 OBJS = ${SRCS:.c=.o}
 
 NAME = fdf
+LIBFT = libftex/libft.a
+MLX = minilibx_macos/libmlx.a
 CC	= cc
-CFLAG = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-${NAME}: all ;
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
+
+${NAME}: $(LIBFT) $(MLX) all ;
+
+$(LIBFT):
+	make -C libftex
+$(MLX):
+	make -C minilibx_macos
 
 .PHONY: all clean fclean re
 
-all: ${OBJS} ;
-	${CC} ${CFLAG} -o ${NAME} ${OBJS}
+all: ${OBJS} $(LIBFT) $(MLX);
+	${CC} ${CFLAG} -o ${NAME} ${OBJS} $(LIBFT) $(MLX) -framework OpenGL -framework AppKit
 clean: 
+	rm -rf $(LIBFT)
 	rm -rf ${OBJS}
 
 fclean: clean
-	#rm -rf *.a
 	rm -rf ${NAME}
 
-re: fclean all ;
+re: fclean clean all ;

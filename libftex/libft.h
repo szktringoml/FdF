@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: string <string>                            +#+  +:+       +#+        */
+/*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 09:38:54 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/09/28 15:58:51 by string           ###   ########.fr       */
+/*   Updated: 2023/09/30 14:19:17 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "ft_printf/inc/ft_printf_bonus.h"
+# include "getnextline/get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
-# include <string.h>
 
 typedef struct s_list
 {
@@ -113,21 +113,5 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
-
-char				*get_next_line(int fd);
-
-char	*ft_gnlstrjoin(char *input, char *str);
-
-char	*ft_gnlstrchr(const char *s, int c);
-
-char	*ft_input_each_fd(int fd, char *input);
-
-char	*ft_getline(char *input);
-
-char	*ft_reshape(char *input);
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 20
-# endif
 
 #endif

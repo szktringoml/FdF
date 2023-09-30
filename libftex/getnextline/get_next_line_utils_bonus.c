@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: string <string>                            +#+  +:+       +#+        */
+/*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/25 07:58:07 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/09/28 12:42:10 by string           ###   ########.fr       */
+/*   Created: 2023/07/03 08:03:26 by kousuzuk          #+#    #+#             */
+/*   Updated: 2023/09/29 13:43:46 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_gnlstrchr(const char *s, int c)
 {
@@ -30,6 +30,15 @@ char	*ft_gnlstrchr(const char *s, int c)
 	return (NULL);
 }
 
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
 
 char	*ft_gnlstrjoin(char *input, char *str)
 {

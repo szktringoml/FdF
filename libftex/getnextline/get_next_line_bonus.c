@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: string <string>                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/25 07:57:22 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/09/28 14:10:11 by string           ###   ########.fr       */
+/*   Created: 2023/07/03 08:03:11 by kousuzuk          #+#    #+#             */
+/*   Updated: 2023/07/03 08:33:14 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line_bonus.h"
+#include <stdio.h>
+#include <unistd.h>
 
 char	*ft_input_each_fd(int fd, char *input)
 {
@@ -21,7 +23,7 @@ char	*ft_input_each_fd(int fd, char *input)
 	if (!str)
 		return (NULL);
 	read_status = 1;
-	while (!ft_gnlstrchr(input, '\n') && read_status != 0)
+	while (!ft_strchr(input, '\n') && read_status != 0)
 	{
 		read_status = read(fd, str, BUFFER_SIZE);
 		if (read_status == -1)
@@ -30,7 +32,7 @@ char	*ft_input_each_fd(int fd, char *input)
 			return (NULL);
 		}
 		str[read_status] = '\0';
-		input = ft_gnlstrjoin(input, str);
+		input = ft_strjoin(input, str);
 	}
 	free(str);
 	return (input);
@@ -91,13 +93,11 @@ char	*ft_reshape(char *input)
 
 char	*get_next_line(int fd)
 {
-
 	char		*line;
 	static char	*inputs[1024];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-
 	inputs[fd] = ft_input_each_fd(fd, inputs[fd]);
 	if (!inputs[fd])
 		return (NULL);
@@ -105,24 +105,3 @@ char	*get_next_line(int fd)
 	inputs[fd] = ft_reshape(inputs[fd]);
 	return (line);
 }
-
-// #include <fcntl.h>
-// #include <libc.h>
-// 	__attribute__((destructor)) static void destructor()
-//  {
-//  	system("leaks -q a.out");
-//  }
-
-//  int	main(void)
-//  {
-// 	printf("totunyuu");
-//  	int	fd;
-
-//  	fd = open("file", O_RDWR);
-// 	if(fd < 0)
-// 		printf("fail");
-// 	//fd = 0;
-// 	printf("aaa");
-//  	printf("output = %s\n", get_next_line(0));
-// 	return 0;
-//  }

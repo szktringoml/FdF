@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: string <string>                            +#+  +:+       +#+         #
+#    By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/02 13:12:57 by kousuzuk          #+#    #+#              #
-#    Updated: 2023/09/28 12:40:00 by string           ###   ########.fr        #
+#    Updated: 2023/09/30 14:14:54 by kousuzuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,10 +45,7 @@ SRCS		= ft_isalpha.c \
 			  ft_putnbr_fd.c \
 			  ft_split.c \
 			  ft_calloc.c \
-			  get_next_line.c \
-			  get_next_line_utils.c
-
-LST			= ft_lstnew.c \
+			  ft_lstnew.c \
 			  ft_lstadd_front.c \
 			  ft_lstsize.c \
 			  ft_lstlast.c \
@@ -57,28 +54,28 @@ LST			= ft_lstnew.c \
 			  ft_lstadd_back.c \
 			  ft_lstclear.c \
 			  ft_lstmap.c \
+			  ft_printf/bonus_src/ft_printf_bonus.c \
+			  ft_printf/bonus_src/ft_generates_bonus.c \
+			  ft_printf/bonus_src/ft_hexaSystem_bonus.c \
+			  getnextline/get_next_line.c \
+			  getnextline/get_next_line_utils.c
 
 OBJS		= ${SRCS:.c=.o}
-BONUS_OBJS	= ${LST:.c=.o}
-ifdef WITH_BONUS
-	SRCS += ${LST}
-	OBJS += ${BONUS_OBJS}
-endif
 NAME		= libft.a
 RM			= rm -f
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
-%c%.o:
-			${CC} ${CFLAGS} $< -o ${<:.c=.o}
+
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
+
 ${NAME}:	${OBJS}
 			ar rcs ${NAME} ${OBJS}
-bonus:	
-	make WITH_BONUS=1 ${NAME}
 all:		${NAME}
 clean:	
-			${RM} ${OBJS} ${BONUS_OBJS}
+			${RM} ${OBJS}
 fclean:		clean
 			${RM} ${NAME}
 re:			fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
