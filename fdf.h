@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <string.h>
+#include <math.h>
 #include "minilibx_macos/mlx.h"
 
 //gcc *.c libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
@@ -26,8 +27,8 @@ typedef struct s_fdf{
 }			t_fdf;
 
 
-void bresenham_x(int x_start, int y_start, int y_finish, t_fdf *fdf_info);
-
+//void bresenham_x(int x_start, int y_start, int y_finish, t_fdf *fdf_info);
+void bresenham_x(int x_start, int y_start, int x_finish, int y_finish, t_fdf *fdf_info);
 void bresenham_y(int y_start, int x_start, int x_finish, t_fdf *fdf_info);
 
 void draw(t_fdf *fdf_info);
