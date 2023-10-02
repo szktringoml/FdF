@@ -34,12 +34,12 @@ int y_finish;
 //         e = 0;
 //     }
 //     // =========================================================================================
-//     float xi = 0;
-//     float y = 0;
+//     int xi = 0;
+//     int y = 0;
     
-//     float e = 0; //端数
-//     float d = 2 * (int)(y_finish - y_start);
-//     float dx = (int)(x_finish - x_start);
+//     int e = 0; //端数
+//     int d = 2 * (int)(y_finish - y_start);
+//     int dx = (int)(x_finish - x_start);
 //     y = y_start;
 //     while(xi < x_finish)
 //     {

@@ -149,7 +149,7 @@ int main(int argc, char **argv)
 	t_fdf *fdf_info;
 	fdf_info = (t_fdf*)malloc(sizeof(t_fdf));
 	read_fdf(&fdf_info);
-	fdf_info->zoom = 20;
+	fdf_info->zoom = 30;
 	fdf_info->mlx_ptr = mlx_init();
 	fdf_info->win_ptr = mlx_new_window(fdf_info->mlx_ptr, 1000, 1000, "FDF");
 	draw(fdf_info);

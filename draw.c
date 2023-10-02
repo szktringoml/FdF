@@ -69,6 +69,7 @@ void calc_bresenham_y(int y_start, int x_start, int x_finish, t_fdf *fdf_info)
 
 //dxは結局１になるので省略してfdf_info->zoomで良い
 //第一引数は(引く方向＿線の始まり).第二引数は傾きを得ためのもの
+
 void bresenham_x(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_info)
 {
 	int z_start;
@@ -76,20 +77,15 @@ void bresenham_x(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf
 	//dx *= fdf_info->zoom;
 	z_start = fdf_info->z_values[y_start][x_start];
 	z_finish = fdf_info->z_values[y_finish][x_finish];
-	printf("z_index[][] x= %d, y= %d\n",x_finish, y_finish);
 	fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff;
-
-	//printf("------------------\n");
 
 	//calc_bresenham_x(x_start, y_start, y_finish, fdf_info);
 	x_start = x_start*fdf_info->zoom;
 	y_start = y_start*fdf_info->zoom;
 	x_finish = x_finish*fdf_info->zoom;
 	y_finish = y_finish*fdf_info->zoom;
-	printf("%d %d\n", x_start, y_start);
 	degrees(&x_start, &y_start, z_start);
 	degrees(&x_finish, &y_finish, z_finish);
-	printf("%d %d\n", x_start, y_start);
 
 	int d = 2 * (y_finish - y_start);
 	int dx = (x_finish - x_start);
@@ -104,76 +100,58 @@ void bresenham_x(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf
 		if(e > dx)
 		{
 			y = y + 1;
-			e = e - dx;
+			e = e - (2 * dx);
 		}
-		printf("plot x= %d, y= %d\n",x, y);
-		mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x + x_start, y + y_start, fdf_info->color);
+		mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x + x_start + 300, y, fdf_info->color);
 		x++;
 	}
 }
 
-//void bresenham_y(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_info)
-// {
-// 	int z_start;
-// 	int z_finish;
-// 	//dx *= fdf_info->zoom;
-// 	z_start = fdf_info->z_values[y_start][x_start];
-// 	z_finish = fdf_info->z_values[y_finish][x_finish];
-// 	printf("z_index[][] x= %d, y= %d\n",x_finish, y_finish);
-// 	fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff;
+int abs(int x)
+{
+	if(x < 0)
+	{
+		return -x;
+	}
+	else
+		return x;
+}
+void bresenham_y(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_info)
+{
+	int z_start;
+	int z_finish;
+	//dx *= fdf_info->zoom;
+	z_start = fdf_info->z_values[y_start][x_start];
+	z_finish = fdf_info->z_values[y_finish][x_finish];
+	fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff;
+	printf("zs = %d, zf = %d\n", z_start, z_finish);
+	//calc_bresenham_x(x_start, y_start, y_finish, fdf_info);
+	x_start = x_start*fdf_info->zoom;
+	y_start = y_start*fdf_info->zoom;
+	x_finish = x_finish*fdf_info->zoom;
+	y_finish = y_finish*fdf_info->zoom;
+	degrees(&x_start, &y_start, z_start);
+	degrees(&x_finish, &y_finish, z_finish);
 
-// 	//printf("------------------\n");
-
-// 	// printf("%d %d\n", x_start, y_start);
-// 	//degrees(&x_start, &y_start, z);
-// 	//degrees(&x_start, &y_start, z1);
-// 	// printf("%d %d\n", x_start, y_start);
-
-// 	//calc_bresenham_x(x_start, y_start, y_finish, fdf_info);
-// 	x_start = x_start*fdf_info->zoom;
-// 	y_start = y_start*fdf_info->zoom;
-// 	x_finish = x_finish*fdf_info->zoom;
-// 	y_finish = y_finish*fdf_info->zoom;
-
-
-// 	int d = 2 * (y_finish - y_start);
-// 	int dx = (x_finish - x_start);
-// 	int e;
-// 	int y;
-// 	int x = 0;
-// 	e = 0;
-// 	y = y_start;
-// 	while(x < dx)
-// 	{
-// 		e = e + d;
-// 		if(e > dx)
-// 		{
-// 			y = y + 1;
-// 			e = e - dx;
-// 		}
-// 		printf("plot x= %d, y= %d\n",x, y);
-// 		mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x, y, fdf_info->color);
-// 		x++;
-// 	}
-// }
-
-// void bresenham_y(int y_start, int x_start, int x_finish, t_fdf *fdf_info)
-// {
-// 	int z;
-// 	int z1;
-// 	//dx *= fdf_info->zoom;
-// 	z = fdf_info->z_values[y_start][x_start];
-// 	z1 = fdf_info->z_values[y_start+1][x_finish];
-// 	fdf_info->color = (z) ? 0xe80c0c : 0xffffff;
-
-// 	x_start *= fdf_info->zoom;
-// 	x_finish *= fdf_info->zoom;
-
-// 	//degrees(&x_start, &y_start, z);
-// 	//degrees(&x_start, &y_start, z1);
-// 	calc_bresenham_y(y_start, x_start, x_finish, fdf_info);
-// }
-
+	int d = 2 * (y_finish - y_start);
+	int dx = (x_finish - x_start);
+	printf("d = %d    dy = %d\n", d, dx);
+	int e = 0;
+	int y = y_start;
+	int x = 0; 
+	while(x < abs(dx))
+	{
+		e = e + d;
+		if(e > abs(dx))
+		{
+			y = y + 1;
+			e = e - (2 * abs(dx));
+		}
+		printf("x:%d y:%d\n", x + 300, y+y_start);
+		mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x+ x_start + 300, y , fdf_info->color);
+		x++;
+	}
+}
 
 
 void draw(t_fdf *fdf_info)
@@ -188,10 +166,13 @@ void draw(t_fdf *fdf_info)
 		x = 0;
 		while(x < fdf_info->width)
 		{
-			if(x < fdf_info->width - 1)
-				bresenham_x(x, y, x+1, y, fdf_info);
-			// if(y < fdf_info->height - 1)
-			// 	bresenham_y(y, x, x, fdf_info);
+			// if(x < fdf_info->width - 1)
+			// {
+				printf("= = = = = = = = = (%d : %d)  = = = = = = = = = = = =\n", y, x);
+			// 	bresenham_x(x, y, x+1, y, fdf_info);
+			// }
+			if(y < fdf_info->height - 1)
+				bresenham_y(x, y, x, y + 1, fdf_info);
 			x++;
 		}
 		//printf("\n");
