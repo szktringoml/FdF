@@ -67,10 +67,20 @@ void calc_bresenham_y(int y_start, int x_start, int x_finish, t_fdf *fdf_info)
 	}
 }
 
+int abs_i(int x)
+{
+	if(x < 0)
+	{
+		return -x;
+	}
+	else
+		return x;
+}
+
 //dxは結局１になるので省略してfdf_info->zoomで良い
 //第一引数は(引く方向＿線の始まり).第二引数は傾きを得ためのもの
 
-void bresenham_x(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_info)
+void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_info)
 {
 	int z_start;
 	int z_finish;
@@ -86,9 +96,13 @@ void bresenham_x(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf
 	y_finish = y_finish*fdf_info->zoom;
 	degrees(&x_start, &y_start, z_start);
 	degrees(&x_finish, &y_finish, z_finish);
+	// if(x_start < x_finish && y_start < y_finish)//x:+方向 y:+方向
+	// {
 
-	int d = 2 * (y_finish - y_start);
-	int dx = (x_finish - x_start);
+	// }
+	// else if(x_start > x_finish && y_start < y_finish)//x:-方向 y:+方向
+	int d = abs_i(2 * (y_finish - y_start));
+	int dx = abs_i(x_finish - x_start);
 	int e;
 	int y;
 	int x = 0;
@@ -99,7 +113,11 @@ void bresenham_x(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf
 		e = e + d;
 		if(e > dx)
 		{
-			y = y + 1;
+			
+			if(y_start < y_finish)
+			 	y = y + 1;
+			else
+				y = y - 1;
 			e = e - (2 * dx);
 		}
 		mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x + x_start + 300, y, fdf_info->color);
@@ -107,15 +125,7 @@ void bresenham_x(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf
 	}
 }
 
-int abs(int x)
-{
-	if(x < 0)
-	{
-		return -x;
-	}
-	else
-		return x;
-}
+
 void bresenham_y(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_info)
 {
 	int z_start;
@@ -133,8 +143,8 @@ void bresenham_y(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf
 	degrees(&x_start, &y_start, z_start);
 	degrees(&x_finish, &y_finish, z_finish);
 
-	int d = 2 * (y_finish - y_start);
-	int dx = (x_finish - x_start);
+	int d = 2 * (x_finish - x_start);
+	int dx = (y_finish - y_start);
 	printf("d = %d    dy = %d\n", d, dx);
 	int e = 0;
 	int y = y_start;
@@ -166,13 +176,13 @@ void draw(t_fdf *fdf_info)
 		x = 0;
 		while(x < fdf_info->width)
 		{
-			// if(x < fdf_info->width - 1)
-			// {
+			if(x < fdf_info->width - 1)
+			{
 				printf("= = = = = = = = = (%d : %d)  = = = = = = = = = = = =\n", y, x);
-			// 	bresenham_x(x, y, x+1, y, fdf_info);
-			// }
+				bresenham(x, y, x+1, y, fdf_info);
+			}
 			if(y < fdf_info->height - 1)
-				bresenham_y(x, y, x, y + 1, fdf_info);
+				bresenham(x, y, x, y + 1, fdf_info);
 			x++;
 		}
 		//printf("\n");
