@@ -1,5 +1,5 @@
 #include "fdf.h"
-
+#define FDF_FILE_PATH "test_maps/42.fdf"
 size_t get_fdfheight(void)
 {
 	int fd;
@@ -94,6 +94,7 @@ int **get_fdfmap(int **z_values, size_t width, size_t height)
 			i++;
 		}
 		z_values[j] = row_values;
+
 		j++;
 	}
 	
