@@ -94,20 +94,18 @@ void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_i
 	y_start = y_start*fdf_info->zoom;
 	x_finish = x_finish*fdf_info->zoom;
 	y_finish = y_finish*fdf_info->zoom;
+	printf("prev : (x_start: %d , y_start: %d) (x_finish: %d , y_finish: %d)\n", x_start, y_start, x_finish, y_finish);
 	degrees(&x_start, &y_start, z_start);
 	degrees(&x_finish, &y_finish, z_finish);
-	// if(x_start < x_finish && y_start < y_finish)//x:+方向 y:+方向
-	// {
-
-	// }
-	// else if(x_start > x_finish && y_start < y_finish)//x:-方向 y:+方向
+	printf("after : (x_start: %d , y_start: %d) (x_finish: %d , y_finish: %d)\n", x_start, y_start, x_finish, y_finish);
+	
 	int d = abs_i(2 * (y_finish - y_start));
 	int dx = abs_i(x_finish - x_start);
 	int e;
 	int y;
 	int x = 0;
 	e = 0;
-	y = y_start; 
+	y = 0; 
 	while(x < dx)
 	{
 		e = e + d;
@@ -120,7 +118,14 @@ void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_i
 				y = y - 1;
 			e = e - (2 * dx);
 		}
-		mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x + x_start + 300, y, fdf_info->color);
+		if(x_start < x_finish && y_start < y_finish)//x:+方向 y:+方向
+			mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x_start + x + 300, y_start + y, fdf_info->color);
+		else if(x_start > x_finish && y_start < y_finish)//x:-方向 y:+方向
+			mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x_start - x + 300, y_start + y, fdf_info->color);
+		else if(x_start < x_finish && y_start > y_finish)//x:+方向 y:-方向
+			mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x_start + x + 300, y_start - y, fdf_info->color);
+		else if(x_start > x_finish && y_start > y_finish)//x:-方向 y:-方向
+			mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x_start - x + 300, y_start - y, fdf_info->color);
 		x++;
 	}
 }
