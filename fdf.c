@@ -1,5 +1,5 @@
 #include "fdf.h"
-#define FDF_FILE_PATH "test_maps/42.fdf"
+#define FDF_FILE_PATH "test_maps/10-70.fdf"
 size_t get_fdfheight(void)
 {
 	int fd;
@@ -70,7 +70,7 @@ size_t get_fdfwidth(void)
 	return width;
 }
 
-int **get_fdfmap(int **z_values, size_t width, size_t height)
+int **get_fdfmap(int **z_values, size_t width, size_t height, t_fdf *fdf_info)
 {
 	int fd;
 	char **sp_row;
@@ -91,10 +91,13 @@ int **get_fdfmap(int **z_values, size_t width, size_t height)
 		while(i < width)
 		{
 			row_values[i] = ft_atoi(sp_row[i]);
+			if(row_values[i] > fdf_info->z_maxvalue)
+				fdf_info->z_maxvalue = row_values[i];
+			if(row_values[i] < fdf_info->z_minvalue)
+				fdf_info->z_minvalue = row_values[i];
 			i++;
 		}
 		z_values[j] = row_values;
-
 		j++;
 	}
 	
@@ -136,7 +139,7 @@ void read_fdf(t_fdf **fdf_info)
 	printf("height = %zu\n", (*fdf_info)->height);
 	printf("width = %zu\n", (*fdf_info)->width);
 	(*fdf_info)->z_values = malloc(sizeof(int*) * (*fdf_info)->height);
-	(*fdf_info)->z_values = get_fdfmap((*fdf_info)->z_values, (*fdf_info)->width, (*fdf_info)->height);\
+	(*fdf_info)->z_values = get_fdfmap((*fdf_info)->z_values, (*fdf_info)->width, (*fdf_info)->height, *fdf_info);\
 }
 
 int deal_key(int key, void *data)
@@ -149,8 +152,10 @@ int main(int argc, char **argv)
 {
 	t_fdf *fdf_info;
 	fdf_info = (t_fdf*)malloc(sizeof(t_fdf));
+	fdf_info->z_maxvalue = 0;
+	fdf_info->z_minvalue = 0;
 	read_fdf(&fdf_info);
-	fdf_info->zoom = 30;
+	fdf_info->zoom = 10;
 	fdf_info->mlx_ptr = mlx_init();
 	fdf_info->win_ptr = mlx_new_window(fdf_info->mlx_ptr, 1000, 1000, "FDF");
 	draw(fdf_info);

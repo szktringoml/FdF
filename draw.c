@@ -27,18 +27,22 @@ void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_i
 	//dx *= fdf_info->zoom;
 	z_start = fdf_info->z_values[y_start][x_start];
 	z_finish = fdf_info->z_values[y_finish][x_finish];
-	
-	fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff;
-
+	if(z_start > 0){
+		fdf_info->color = 0x008000 + (fdf_info->plus_color * z_start) ;
+		printf("=======================================================================================\n");
+		printf("color = %dにしたいのに%dになる\n",16711680,0x008000 + (fdf_info->plus_color * z_start));}
+	else
+		fdf_info->color = 0x008000 - (fdf_info->minus_color * z_start);
+	//fdf_info->color = fdf_info->z_maxvalue * (0xe80c0c/0xffffff);
 	//calc_bresenham_x(x_start, y_start, y_finish, fdf_info);
 	x_start = x_start*fdf_info->zoom;
 	y_start = y_start*fdf_info->zoom;
 	x_finish = x_finish*fdf_info->zoom;
 	y_finish = y_finish*fdf_info->zoom;
-	printf("prev : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d)\n", y_start, x_start, y_finish, x_finish);
+	printf("prev : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d,  color: %d)\n", y_start, x_start, y_finish, x_finish, fdf_info->color);
 	degrees(&x_start, &y_start, z_start);
 	degrees(&x_finish, &y_finish, z_finish);
-	printf("after : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d)\n", y_start, x_start, y_finish, x_finish);
+	printf("after : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d,  color: %d)\n", y_start, x_start, y_finish, x_finish, fdf_info->color);
 	
 	int d = abs_i(2 * (y_finish - y_start));
 	int dx = abs_i(x_finish - x_start);
@@ -74,6 +78,17 @@ void draw(t_fdf *fdf_info)
 	int i = 0;
 
 	y = 0;
+	int median = (fdf_info->z_maxvalue - fdf_info->z_minvalue) / 2;
+	if(fdf_info->z_maxvalue - median != 0){
+		fdf_info->plus_color = (0xff0000 - 0x008000) / fdf_info->z_maxvalue - median;
+	}
+	else
+		fdf_info->plus_color = 0;
+	if(median - fdf_info->z_minvalue != 0)
+		fdf_info->minus_color = (0x008000 - 0x0000ff) / -(median - fdf_info->z_minvalue);
+	else
+		fdf_info->minus_color = 0;
+	printf("z_maxvalue = %d, z_maxvalue = %d, plus_color = %d, minus_color = %d \n", fdf_info->z_maxvalue, fdf_info->z_minvalue, fdf_info->plus_color,fdf_info->minus_color);
 	while(y < fdf_info->height)
 	{
 		x = 0;
@@ -88,7 +103,6 @@ void draw(t_fdf *fdf_info)
 				bresenham(x, y, x, y + 1, fdf_info);
 			x++;
 		}
-		//printf("\n");
 		y++;
 	}
 }

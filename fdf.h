@@ -21,6 +21,9 @@ typedef struct s_fdf{
 	size_t zoom;
 	int color;
 	int z_maxvalue;
+	int z_minvalue;
+	int plus_color;
+	int minus_color;
 	int **z_values;
 	void *mlx_ptr;
 	void *win_ptr;
@@ -28,9 +31,7 @@ typedef struct s_fdf{
 }			t_fdf;
 
 
-void bresenham_x(int x_start, int y_start, int y_finish, t_fdf *fdf_info);
-//void bresenham_x(int x_start, int y_start, int x_finish, int y_finish, t_fdf *fdf_info);
-//void bresenham_y(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_info);
+void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_info);
 
 void draw(t_fdf *fdf_info);
 
