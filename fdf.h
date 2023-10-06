@@ -10,6 +10,7 @@
 #include <math.h>
 #include "minilibx_macos/mlx.h"
 
+#define FDF_FILE_PATH "test_maps/42.fdf"
 //gcc *.c libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
 
 // #ifndef FDF_FILE_PATH
@@ -24,9 +25,13 @@ typedef struct s_fdf{
 	int **z_values;
 	void *mlx_ptr;
 	void *win_ptr;
+	void *img_ptr;
+	char *data_addr;
+	int size_line;
+	int bit_per_pixel;
+	int endian;
 
 }			t_fdf;
-
 
 void bresenham_x(int x_start, int y_start, int y_finish, t_fdf *fdf_info);
 //void bresenham_x(int x_start, int y_start, int x_finish, int y_finish, t_fdf *fdf_info);
