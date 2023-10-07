@@ -151,8 +151,8 @@ int main(int argc, char **argv)
 	read_fdf(&fdf_info);
 	fdf_info->zoom = 30;
 	fdf_info->mlx_ptr = mlx_init();
-	fdf_info->win_ptr = mlx_new_window(fdf_info->mlx_ptr, 1000, 1000, "FDF");
-	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, 500, 500);
+	fdf_info->win_ptr = mlx_new_window(fdf_info->mlx_ptr, WIDTH, HEIGHT, "FDF");
+	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
 	fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr, &fdf_info->bit_per_pixel, &fdf_info->size_line, &fdf_info->endian);
 	draw(fdf_info);
 	mlx_key_hook(fdf_info->win_ptr, deal_key, NULL);

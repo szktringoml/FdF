@@ -12,6 +12,8 @@
 
 #define FDF_FILE_PATH "test_maps/42.fdf"
 //gcc *.c libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
+#define WIDTH 500
+#define HEIGHT 500
 
 // #ifndef FDF_FILE_PATH
 //  # define FDF_FILE_PATH "test_maps/pylone.fdf"
@@ -26,6 +28,8 @@ typedef struct s_fdf{
 	void *mlx_ptr;
 	void *win_ptr;
 	void *img_ptr;
+	int  img_width;
+	int img_height;
 	char *data_addr;
 	int size_line;
 	int bit_per_pixel;

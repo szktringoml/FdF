@@ -7,14 +7,26 @@ void degrees(int *x, int *y, int z)
 }
 
 
-int abs_i(int x)
+int ft_abs_i(int x)
 {
 	if(x < 0)
-	{
 		return -x;
-	}
 	else
 		return x;
+}
+
+void put_pixel(t_fdf *fdf_info, int x, int y, int color)
+{
+	int i;
+	// printf("(y = %d, x = %d)\n", y, x);
+	if(0 <= x && x < WIDTH && 0 <= y && y < HEIGHT)
+	{
+		i = (y * fdf_info->size_line) + (x * fdf_info->bit_per_pixel/8);
+		// printf("  i = %d", i);
+		fdf_info->data_addr[i] = color;
+		fdf_info->data_addr[i+1] = color >> 8;
+		fdf_info->data_addr[i+2] = color >> 16;
+	}
 }
 
 //dxは結局１になるので省略してfdf_info->zoomで良い
@@ -35,19 +47,19 @@ void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_i
 	y_start = y_start*fdf_info->zoom;
 	x_finish = x_finish*fdf_info->zoom;
 	y_finish = y_finish*fdf_info->zoom;
-	printf("prev : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d)\n", y_start, x_start, y_finish, x_finish);
+	// printf("prev : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d)\n", y_start, x_start, y_finish, x_finish);
 	degrees(&x_start, &y_start, z_start);
 	degrees(&x_finish, &y_finish, z_finish);
-	printf("after : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d)\n", y_start, x_start, y_finish, x_finish);
-	
-	int d = abs_i(2 * (y_finish - y_start));
-	int dx = abs_i(x_finish - x_start);
+	// printf("after : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d)\n", y_start, x_start, y_finish, x_finish);
+
+	int d = ft_abs_i(2 * (y_finish - y_start));
+	int dx = ft_abs_i(x_finish - x_start);
 	int e;
 	int y;
 	int x = 0;
 	e = 0;
 	y = 0; 
-	while(x < dx)
+	while(x < dx)//dxが0だと入らないので条件分岐が必要
 	{
 		e = e + d;
 		if(e > dx)
@@ -56,13 +68,13 @@ void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_i
 			e = e - (2 * dx);
 		}
 		if(x_start < x_finish && y_start < y_finish)//x:+方向 y:+方向
-			mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x_start + x + 300, y_start + y, fdf_info->color);
+			put_pixel(fdf_info, x_start + x + 300, y_start + y, fdf_info->color);
 		else if(x_start > x_finish && y_start < y_finish)//x:-方向 y:+方向
-			mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x_start - x + 300, y_start + y, fdf_info->color);
+			put_pixel(fdf_info, x_start - x + 300, y_start + y, fdf_info->color);
 		else if(x_start > x_finish && y_start > y_finish)//x:-方向 y:-方向
-			mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x_start - x + 300, y_start - y, fdf_info->color);
+			put_pixel(fdf_info, x_start - x + 300, y_start - y, fdf_info->color);
 		else if(x_start < x_finish && y_start > y_finish)//x:+方向 y:-方向
-			mlx_pixel_put(fdf_info->mlx_ptr, fdf_info->win_ptr, x_start + x + 300, y_start - y, fdf_info->color);
+			put_pixel(fdf_info, x_start + x + 300, y_start - y, fdf_info->color);
 		x++;
 	}
 }
@@ -72,6 +84,9 @@ void draw(t_fdf *fdf_info)
 	int x;
 	int y;
 	int i = 0;
+	//printf("pre\n");
+	//ft_bzero(fdf_info->data_addr, HEIGHT * WIDTH * fdf_info->bit_per_pixel/8); //fdf_info->bit_per_pixel/8 は 4byteで表すことを示すため
+	//printf("after\n");
 
 	y = 0;
 	while(y < fdf_info->height)
@@ -81,7 +96,7 @@ void draw(t_fdf *fdf_info)
 		{
 			if(x < fdf_info->width - 1)
 			{
-				printf("= = = = = = = = = (%d : %d)  = = = = = = = = = = = =\n", y, x);
+				// printf("= = = = = = = = = (%d : %d)  = = = = = = = = = = = =\n", y, x);
 				bresenham(x, y, x+1, y, fdf_info);
 			}
 			if(y < fdf_info->height - 1)
@@ -91,4 +106,5 @@ void draw(t_fdf *fdf_info)
 		//printf("\n");
 		y++;
 	}
+	//mlx_put_image_to_window(fdf_info->mlx_ptr, fdf_info->win_ptr, fdf_info->img_ptr, 0, 0);
 }
