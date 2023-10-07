@@ -6,12 +6,14 @@
 #    By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 16:07:31 by kousuzuk          #+#    #+#              #
-#    Updated: 2023/10/07 16:28:52 by kousuzuk         ###   ########.fr        #
+#    Updated: 2023/10/07 17:00:30 by kousuzuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = fdf.c \
 	   draw.c \
+	   input_map.c \
+	   #operation.c
 	
 
 OBJS = ${SRCS:.c=.o}
@@ -28,6 +30,7 @@ all: ${NAME} $(LIBFT) $(MLX) ;
 %.o: %.c
 	$(CC) -c $< -o $@
 
+#gcc *.c libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
 #cflagsは今はいいや
 ${NAME}: ${OBJS} $(LIBFT)
 	$(CC) -c $(SRCS)
