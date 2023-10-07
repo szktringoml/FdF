@@ -12,8 +12,8 @@
 
 #define FDF_FILE_PATH "test_maps/42.fdf"
 //gcc *.c libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
-#define WIDTH 500
-#define HEIGHT 500
+#define WIDTH 700
+#define HEIGHT 700
 
 // #ifndef FDF_FILE_PATH
 //  # define FDF_FILE_PATH "test_maps/pylone.fdf"
