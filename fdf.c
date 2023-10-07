@@ -144,6 +144,12 @@ int deal_key(int key, void *data)
 	return 0;
 }
 
+int close_window(t_fdf *fdf_info)
+{
+	mlx_destroy_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
+    exit(1);
+    return (0);
+}
 int main(int argc, char **argv)
 {
 	t_fdf *fdf_info;
@@ -156,6 +162,7 @@ int main(int argc, char **argv)
 	fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr, &fdf_info->bit_per_pixel, &fdf_info->size_line, &fdf_info->endian);
 	draw(fdf_info);
 	mlx_key_hook(fdf_info->win_ptr, deal_key, NULL);
+	mlx_hook(fdf_info->win_ptr, 17, 1L << 17, close_window, fdf_info);
 	mlx_put_image_to_window(fdf_info->mlx_ptr, fdf_info->win_ptr, fdf_info->img_ptr, 0, 0);
 	mlx_loop(fdf_info->mlx_ptr);
 
