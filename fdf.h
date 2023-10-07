@@ -15,6 +15,16 @@
 #define WIDTH 700
 #define HEIGHT 700
 
+#define BAD_EXIT 1
+#define SUCCESS_EXIT 0
+#define NON_FILENAME_ARGUMENT "Usage: ./fdf \"<.fdf file>\"\n"
+#define NON_FILENAME_ARGUMENT_CC 27
+
+#define NOT_FDF_FILE "Please specify .fdf file\n"
+#define NOT_FDF_FILE_CC 25
+
+#define COULD_NOT_OPEN_FILE "This file could not be opened. Please double check the path and name.\n"
+#define COULD_NOT_OPEN_FILE_CC 70
 // #ifndef FDF_FILE_PATH
 //  # define FDF_FILE_PATH "test_maps/pylone.fdf"
 // #endif

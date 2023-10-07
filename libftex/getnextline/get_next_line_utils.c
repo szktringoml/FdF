@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 07:58:07 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/09/30 14:22:17 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/07 15:59:57 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,3 @@ char	*ft_gnlstrjoin(char *input, char *str)
 	free(input);
 	return (str_concat);
 }
-

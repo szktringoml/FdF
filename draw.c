@@ -6,15 +6,6 @@ void degrees(int *x, int *y, int z)
 	*y = (*x + *y) * cos(0.8) - z;
 }
 
-
-int ft_abs_i(int x)
-{
-	if(x < 0)
-		return -x;
-	else
-		return x;
-}
-
 void put_pixel(t_fdf *fdf_info, int x, int y, int color)
 {
 	int i;
@@ -84,9 +75,6 @@ void draw(t_fdf *fdf_info)
 	int x;
 	int y;
 	int i = 0;
-	//printf("pre\n");
-	//ft_bzero(fdf_info->data_addr, HEIGHT * WIDTH * fdf_info->bit_per_pixel/8); //fdf_info->bit_per_pixel/8 は 4byteで表すことを示すため
-	//printf("after\n");
 
 	y = 0;
 	while(y < fdf_info->height)

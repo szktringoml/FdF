@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 09:38:54 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/09/30 14:19:17 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/07 16:02:43 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_abs_i(int x);
+
 int					ft_atoi(const char *str);
 
 void				ft_bzero(void *s, size_t n);
@@ -39,6 +41,8 @@ int					ft_isascii(int c);
 int					ft_isdigit(int c);
 
 int					ft_isprint(int c);
+
+int					ft_isverify_file_extension(char *filename, char *extension);
 
 char				*ft_itoa(int n);
 
