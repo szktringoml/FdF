@@ -84,10 +84,15 @@ int	**get_fdfmap(int **z_values, char *filename, size_t width, size_t height)
 		sp_row = ft_split(row, ' ');
 		free(row);
 		row_values = malloc(sizeof(int) * width);
-		while (i < width)
+		while (sp_row[i] && i < width)
 		{
 			row_values[i] = ft_atoi(sp_row[i]);
 			i++;
+		}
+		if (i != width)
+		{
+			write(2, FDF_FILE_DEFFELENT_FORMAT, FDF_FILE_DEFFELENT_FORMAT_CC);
+			exit(BAD_EXIT);
 		}
 		z_values[j] = row_values;
 		i = 0;

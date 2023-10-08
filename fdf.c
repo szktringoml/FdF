@@ -30,26 +30,27 @@ void	read_fdf(t_fdf **fdf_info, char *filename)
 
 int	deal_key(int key, t_fdf *fdf_info)
 {
-	if(fdf_info == NULL)
-		return 0;
+	if (fdf_info == NULL)
+		return (0);
 	//printf("%d\n", key);
-	if(key == PLUS && fdf_info->zoom < 1000)
+	if (key == PLUS && fdf_info->zoom < 1000)
 		fdf_info->zoom += 10;
-	if(key == MINUS && fdf_info->zoom > 0)
+	if (key == MINUS && fdf_info->zoom > 10)
 		fdf_info->zoom -= 10;
-	if(key == ALLOW_TOP)
+	if (key == ALLOW_TOP)
 		fdf_info->shift_y -= 10;
-	if(key == ALLOW_RIGHT)
+	if (key == ALLOW_RIGHT)
 		fdf_info->shift_x += 10;
-	if(key == ALLOW_BOTTOM)
+	if (key == ALLOW_BOTTOM)
 		fdf_info->shift_y += 10;
-	if(key == ALLOW_LEFT)
+	if (key == ALLOW_LEFT)
 		fdf_info->shift_x -= 10;
 	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
 	fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr,
-			&fdf_info->bit_per_pixel, &fdf_info->size_line,
-			&fdf_info->endian);
+											&fdf_info->bit_per_pixel,
+											&fdf_info->size_line,
+											&fdf_info->endian);
 	draw(fdf_info);
 	return (0);
 }
@@ -82,7 +83,7 @@ void	error_handler(char *filename)
 
 int	main(int argc, char **argv)
 {
-		t_fdf *fdf_info;
+	t_fdf	*fdf_info;
 
 	if (argc == 2)
 	{
@@ -97,8 +98,9 @@ int	main(int argc, char **argv)
 				"FDF");
 		fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
 		fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr,
-				&fdf_info->bit_per_pixel, &fdf_info->size_line,
-				&fdf_info->endian);
+												&fdf_info->bit_per_pixel,
+												&fdf_info->size_line,
+												&fdf_info->endian);
 		draw(fdf_info);
 		mlx_key_hook(fdf_info->win_ptr, deal_key, fdf_info);
 		mlx_hook(fdf_info->win_ptr, 17, 1L << 17, close_window, fdf_info);

@@ -14,7 +14,7 @@
 # define HEIGHT 1080
 
 # define PLUS 24
-#define MINUS 27
+# define MINUS 27
 
 # define ALLOW_TOP 126
 # define ALLOW_RIGHT 124
@@ -32,6 +32,8 @@
 # define COULD_NOT_OPEN_FILE "This file could not be opened. Please double check the path and name.\n"
 # define COULD_NOT_OPEN_FILE_CC 70
 
+# define FDF_FILE_DEFFELENT_FORMAT "fdf file is invalid. Please load a file with the correct format.\n"
+# define FDF_FILE_DEFFELENT_FORMAT_CC 65
 typedef struct s_fdf
 {
 	size_t	height;
