@@ -69,7 +69,7 @@ size_t get_fdfwidth(char *filename)
 	return width;
 }
 
-int **get_fdfmap(int **z_values, char *filename, size_t width, size_t height)
+int **get_fdfmap(t_fdf *fdf_info, char *filename)
 {
 	int fd;
 	char **sp_row;
@@ -84,19 +84,21 @@ int **get_fdfmap(int **z_values, char *filename, size_t width, size_t height)
 		write(2, COULD_NOT_OPEN_FILE, COULD_NOT_OPEN_FILE_CC);
 		exit(BAD_EXIT);
 	}
-	while(j < height)
+	while(j < fdf_info->height)
 	{
 		i = 0;
 		row = get_next_line(fd);\
 		sp_row = ft_split(row, ' ');
 		free(row);
-		row_values = malloc(sizeof(int) * width);
-		while(i < width)
+		row_values = malloc(sizeof(int) * fdf_info->width);
+		while(i < fdf_info->width)
 		{
 			row_values[i] = ft_atoi(sp_row[i]);
+			if(ft_abs_i(row_values[i]) > fdf_info->z_max_abs)
+				fdf_info->z_max_abs = ft_abs_i(row_values[i]);
 			i++;
 		}
-		z_values[j] = row_values;
+		fdf_info->z_values[j] = row_values;
 
 		j++;
 	}
@@ -104,5 +106,5 @@ int **get_fdfmap(int **z_values, char *filename, size_t width, size_t height)
 	// while(sp_row[--width])
 	// 	free(sp_row[width]);
 	// free(sp_row);
-	return z_values;
+	return fdf_info->z_values;
 }

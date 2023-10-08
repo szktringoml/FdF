@@ -18,6 +18,31 @@ void put_pixel(t_fdf *fdf_info, int x, int y, int color)
 	}
 }
 
+
+int calc_color_by_z_value(int max_abs, int z_start, int z_finish, int ratio_of_x)
+{
+	int color;
+	int red = 0xff0000;
+	int green = 0x00ff00;
+	int blue = 0x0000ff;
+	int z;
+	z = ratio_of_x * (z_finish - z_start);
+	printf("z = %d (ratio = %d)\n", z, ratio_of_x);
+	color = 0;
+	if(z > 0)
+	{
+		color = z/max_abs * red/green;
+	}
+	else if(z < 0)
+	{
+		color = ft_abs_i(z)/max_abs * blue/green;
+	}
+	else
+		color = 0x00ff00;
+	
+	return color;
+}
+
 void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_info)
 {
 	int z_start;
@@ -27,7 +52,7 @@ void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_i
 	z_start = fdf_info->z_values[y_start][x_start];
 	z_finish = fdf_info->z_values[y_finish][x_finish];
 	
-	fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff;
+	// fdf_info->color = (z_start) ? 0xff0000 : 0xffffff;
 	x_start = x_start*fdf_info->zoom;
 	y_start = y_start*fdf_info->zoom;
 	x_finish = x_finish*fdf_info->zoom;
@@ -53,13 +78,13 @@ void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_i
 			e = e - (2 * dx);
 		}
 		if(x_start < x_finish && y_start < y_finish)//x:+方向 y:+方向
-			put_pixel(fdf_info, x_start + x + 300, y_start + y, fdf_info->color);
+			put_pixel(fdf_info, x_start + x + 300, y_start + y, calc_color_by_z_value(fdf_info->z_max_abs, z_start, z_finish, x/dx));
 		else if(x_start > x_finish && y_start < y_finish)//x:-方向 y:+方向
-			put_pixel(fdf_info, x_start - x + 300, y_start + y, fdf_info->color);
+			put_pixel(fdf_info, x_start - x + 300, y_start + y, calc_color_by_z_value(fdf_info->z_max_abs, z_start, z_finish, x/dx));
 		else if(x_start > x_finish && y_start > y_finish)//x:-方向 y:-方向
-			put_pixel(fdf_info, x_start - x + 300, y_start - y, fdf_info->color);
+			put_pixel(fdf_info, x_start - x + 300, y_start - y, calc_color_by_z_value(fdf_info->z_max_abs, z_start, z_finish, x/dx));
 		else if(x_start < x_finish && y_start > y_finish)//x:+方向 y:-方向
-			put_pixel(fdf_info, x_start + x + 300, y_start - y, fdf_info->color);
+			put_pixel(fdf_info, x_start + x + 300, y_start - y, calc_color_by_z_value(fdf_info->z_max_abs, z_start, z_finish, x/dx));
 		x++;
 	}
 }
@@ -76,6 +101,7 @@ void draw(t_fdf *fdf_info)
 		x = 0;
 		while(x < fdf_info->width)
 		{
+			printf("座標(y = %d, x = %d)のとき", y, x);
 			if(x < fdf_info->width - 1)
 				bresenham(x, y, x+1, y, fdf_info);
 			if(y < fdf_info->height - 1)

@@ -29,7 +29,7 @@ void read_fdf(t_fdf **fdf_info, char *filename)
 	printf("height = %zu\n", (*fdf_info)->height);
 	printf("width = %zu\n", (*fdf_info)->width);
 	(*fdf_info)->z_values = malloc(sizeof(int*) * (*fdf_info)->height);
-	(*fdf_info)->z_values = get_fdfmap((*fdf_info)->z_values, filename, (*fdf_info)->width, (*fdf_info)->height);
+	(*fdf_info)->z_values = get_fdfmap(*fdf_info, filename);
 }
 
 int deal_key(int key, void *data)

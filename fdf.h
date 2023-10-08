@@ -37,7 +37,7 @@ typedef struct s_fdf
 	int		bit_per_pixel;
 	int		endian;
 	size_t	zoom;
-	int		color;
+	int		z_max_abs;
 	int		z_maxvalue;
 	int		z_minvalue;
 
@@ -49,8 +49,7 @@ void		split_free(char **str, size_t sec);
 
 size_t		get_fdfwidth(char *filename);
 
-int			**get_fdfmap(int **z_values, char *filename, size_t width,
-				size_t height);
+int			**get_fdfmap(t_fdf *fdf_info, char *filename);
 
 void		read_fdf(t_fdf **fdf_info, char *filename);
 
