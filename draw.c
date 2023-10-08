@@ -32,10 +32,8 @@ void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_i
 	y_start = y_start*fdf_info->zoom;
 	x_finish = x_finish*fdf_info->zoom;
 	y_finish = y_finish*fdf_info->zoom;
-	// printf("prev : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d)\n", y_start, x_start, y_finish, x_finish);
 	degrees(&x_start, &y_start, z_start);
 	degrees(&x_finish, &y_finish, z_finish);
-	// printf("after : (y_start: %d , x_start: %d) (y_finish: %d , x_finish: %d)\n", y_start, x_start, y_finish, x_finish);
 
 	int d = ft_abs_i(2 * (y_finish - y_start));
 	int dx = ft_abs_i(x_finish - x_start);
@@ -53,13 +51,13 @@ void bresenham(int x_start,int y_start, int x_finish, int y_finish, t_fdf *fdf_i
 			e = e - (2 * dx);
 		}
 		if(x_start < x_finish && y_start < y_finish)//x:+方向 y:+方向
-			put_pixel(fdf_info, x_start + x + 300, y_start + y, fdf_info->color);
+			put_pixel(fdf_info, x_start + x + fdf_info->shift_x, y_start + y + fdf_info->shift_y, fdf_info->color);
 		else if(x_start > x_finish && y_start < y_finish)//x:-方向 y:+方向
-			put_pixel(fdf_info, x_start - x + 300, y_start + y, fdf_info->color);
+			put_pixel(fdf_info, x_start - x + fdf_info->shift_x, y_start + y + fdf_info->shift_y, fdf_info->color);
 		else if(x_start > x_finish && y_start > y_finish)//x:-方向 y:-方向
-			put_pixel(fdf_info, x_start - x + 300, y_start - y, fdf_info->color);
+			put_pixel(fdf_info, x_start - x + fdf_info->shift_x, y_start - y + fdf_info->shift_y, fdf_info->color);
 		else if(x_start < x_finish && y_start > y_finish)//x:+方向 y:-方向
-			put_pixel(fdf_info, x_start + x + 300, y_start - y, fdf_info->color);
+			put_pixel(fdf_info, x_start + x + fdf_info->shift_x, y_start - y + fdf_info->shift_y, fdf_info->color);
 		x++;
 	}
 }
@@ -69,8 +67,8 @@ void draw(t_fdf *fdf_info)
 	int x;
 	int y;
 	int i = 0;
-
 	y = 0;
+
 	while(y < fdf_info->height)
 	{
 		x = 0;
@@ -84,5 +82,6 @@ void draw(t_fdf *fdf_info)
 		}
 		y++;
 	}
-	//mlx_put_image_to_window(fdf_info->mlx_ptr, fdf_info->win_ptr, fdf_info->img_ptr, 0, 0);
+	mlx_put_image_to_window(fdf_info->mlx_ptr, fdf_info->win_ptr,
+				fdf_info->img_ptr, 0, 0);
 }

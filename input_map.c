@@ -1,12 +1,14 @@
 #include "fdf.h"
-size_t get_fdfheight(char *filename)
+
+size_t	get_fdfheight(char *filename)
 {
-	int fd;
-	size_t height;
-	char *line;
+	int		fd;
+	size_t	height;
+	char	*line;
+
 	height = 0;
 	fd = open(filename, O_RDONLY);
-	if(fd == -1)
+	if (fd == -1)
 	{
 		write(2, COULD_NOT_OPEN_FILE, COULD_NOT_OPEN_FILE_CC);
 		exit(BAD_EXIT);
@@ -14,9 +16,9 @@ size_t get_fdfheight(char *filename)
 	else
 	{
 		line = get_next_line(fd);
-		if(line)
+		if (line)
 			height++;
-		while(line)
+		while (line)
 		{
 			free(line);
 			line = get_next_line(fd);
@@ -24,30 +26,20 @@ size_t get_fdfheight(char *filename)
 		}
 	}
 	close(fd);
-	return height - 1;
+	return (height - 1);
 }
 
-void	split_free(char **str, size_t sec)
+size_t	get_fdfwidth(char *filename)
 {
-	while (str[sec])
-	{
-		free(str[sec]);
-		sec--;
-	}
-	free(str);
-}
+	int		fd;
+	size_t	width;
+	char	*line;
+	char	**row_values;
+	size_t	i;
 
-size_t get_fdfwidth(char *filename)
-{
-	int fd;
-	size_t width;
-	char *line;
-	char **row_values;
-	size_t i;
-	
 	width = 0;
 	fd = open(filename, O_RDONLY);
-	if(fd == -1)
+	if (fd == -1)
 	{
 		write(2, COULD_NOT_OPEN_FILE, COULD_NOT_OPEN_FILE_CC);
 		exit(BAD_EXIT);
@@ -56,20 +48,21 @@ size_t get_fdfwidth(char *filename)
 	{
 		line = get_next_line(fd);
 		row_values = ft_split(line, ' ');
-		while(row_values[width])
+		free(line);
+		while (row_values[width])
 			width++;
+		i = 0;
+		while (i < width)
+		{
+			free(row_values[i]);
+			i++;
+		}
+		free(row_values);
 	}
-	i = width;
-	
-	//free(line);
-	//split_free(row_values, width-1);
-	//while(row_values[--i] && i >= 0)
-	 	//free(row_values[i]);
-	 //free(row_values);
-	return width;
+	return (width);
 }
 
-int **get_fdfmap(int **z_values, char *filename, size_t width, size_t height)
+int	**get_fdfmap(int **z_values, char *filename, size_t width, size_t height)
 {
 	int fd;
 	char **sp_row;
@@ -77,32 +70,34 @@ int **get_fdfmap(int **z_values, char *filename, size_t width, size_t height)
 	size_t i;
 	size_t j;
 	char *row;
-	j = 0;	
+	j = 0;
 	fd = open(filename, O_RDONLY);
-	if(fd == -1)
+	if (fd == -1)
 	{
 		write(2, COULD_NOT_OPEN_FILE, COULD_NOT_OPEN_FILE_CC);
 		exit(BAD_EXIT);
 	}
-	while(j < height)
+	while (j < height)
 	{
 		i = 0;
-		row = get_next_line(fd);\
+		row = get_next_line(fd);
 		sp_row = ft_split(row, ' ');
 		free(row);
 		row_values = malloc(sizeof(int) * width);
-		while(i < width)
+		while (i < width)
 		{
 			row_values[i] = ft_atoi(sp_row[i]);
 			i++;
 		}
 		z_values[j] = row_values;
-
+		i = 0;
+		while (i < width)
+		{
+			free(sp_row[i]);
+			i++;
+		}
+		free(sp_row);
 		j++;
 	}
-	
-	// while(sp_row[--width])
-	// 	free(sp_row[width]);
-	// free(sp_row);
-	return z_values;
+	return (z_values);
 }
