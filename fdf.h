@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:44:53 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:36:30 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,11 @@ typedef struct s_coordinate
 {
 	int				x_start;
 	int				y_start;
+	int 			z_start;
 	int				x_finish;
 	int				y_finish;
+	int				z_finish;
+
 
 }					t_coordinate;
 
@@ -79,6 +82,7 @@ typedef struct s_fdf
 	int				endian;
 	t_coordinate	*coordinate;
 	int				color;
+	int				z_max_abs;
 	size_t			zoom;
 	size_t			shift_x;
 	size_t			shift_y;
@@ -88,10 +92,10 @@ size_t				get_fdfheight(char *filename);
 
 size_t				get_fdfwidth(char *filename);
 
-int					**get_fdfmap(int **z_values, char *filename, size_t width,
+int					**get_fdfmap(t_fdf *fdf_info, int **z_values, char *filename, size_t width,
 						size_t height);
 
-void				get_fdfmap_generate_array(int fd, int **z_values,
+void				get_fdfmap_generate_array(t_fdf *fdf_info, int fd, int **z_values,
 						size_t width, size_t height);
 
 void				read_fdf(t_fdf **fdf_info, char *filename);
@@ -135,5 +139,7 @@ void				draw(t_fdf *fdf_info);
 void				shift_map(t_fdf *fdf_info, int key);
 
 void				zoom_map(t_fdf *fdf_info, int key);
+
+void	get_color_by_z_value(t_fdf *fdf_info, int dx, int x);
 
 #endif

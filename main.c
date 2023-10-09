@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:10:30 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:11:50 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:45:57 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 // 	y = y_start;
 // 	while (xi < x_finish)
 // 	{
-// 		e = e + d * (xi - x_start);
+// 		e = e + d;
 // 		if (e > dx)
 // 		{
 // 			y = y + 1;

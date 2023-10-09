@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:16:07 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:13:14 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:37:16 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,33 @@ void	put_pixel_hub(t_fdf *fdf_info, int x, int y)
 {
 	if (fdf_info->coordinate->x_start < fdf_info->coordinate->x_finish
 		&& fdf_info->coordinate->y_start < fdf_info->coordinate->y_finish)
+	{
 		put_pixel(fdf_info, fdf_info->coordinate->x_start + x
 			+ fdf_info->shift_x, fdf_info->coordinate->y_start + y
 			+ fdf_info->shift_y, fdf_info->color);
+	}
 	else if (fdf_info->coordinate->x_start > fdf_info->coordinate->x_finish
 		&& fdf_info->coordinate->y_start < fdf_info->coordinate->y_finish)
+	{
 		put_pixel(fdf_info, fdf_info->coordinate->x_start - x
 			+ fdf_info->shift_x, fdf_info->coordinate->y_start + y
 			+ fdf_info->shift_y, fdf_info->color);
+
+	}
 	else if (fdf_info->coordinate->x_start > fdf_info->coordinate->x_finish
 		&& fdf_info->coordinate->y_start > fdf_info->coordinate->y_finish)
+	{
 		put_pixel(fdf_info, fdf_info->coordinate->x_start - x
 			+ fdf_info->shift_x, fdf_info->coordinate->y_start - y
 			+ fdf_info->shift_y, fdf_info->color);
+	}
 	else if (fdf_info->coordinate->x_start < fdf_info->coordinate->x_finish
 		&& fdf_info->coordinate->y_start > fdf_info->coordinate->y_finish)
+	{
 		put_pixel(fdf_info, fdf_info->coordinate->x_start + x
 			+ fdf_info->shift_x, fdf_info->coordinate->y_start - y
 			+ fdf_info->shift_y, fdf_info->color);
+	}
 }
 
 void	bresenham_algo(t_fdf *fdf_info, int dx, int d)
@@ -72,6 +81,7 @@ void	bresenham_algo(t_fdf *fdf_info, int dx, int d)
 			y = y + 1;
 			e = e - (2 * dx);
 		}
+		get_color_by_z_value(fdf_info, dx, x);
 		put_pixel_hub(fdf_info, x, y);
 		x++;
 	}

@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:09 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 18:12:27 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 19:40:59 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,21 @@ void	apply_zoom_to_one_line_points(t_fdf *fdf_info)
 
 void	apply_properties_to_one_line_points(t_fdf *fdf_info)
 {
-	int	z_start;
-	int	z_finish;
 	int	d;
 	int	dx;
 
-	z_start = fdf_info->z_values[fdf_info->coordinate->y_start]
+	fdf_info->coordinate->z_start = fdf_info->z_values[fdf_info->coordinate->y_start]
 	[fdf_info->coordinate->x_start];
-	z_finish = fdf_info->z_values[fdf_info->coordinate->y_finish]
+	fdf_info->coordinate->z_finish = fdf_info->z_values[fdf_info->coordinate->y_finish]
 	[fdf_info->coordinate->x_finish];
-	fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff; ///////////////normここだけ(4コつく)
+	//fdf_info->color = (fdf_info->coordinate->z_start) ? 0xe80c0c : 0xffffff; ///////////////normここだけ(4)
 	apply_zoom_to_one_line_points(fdf_info);
 	apply_degrees(&(fdf_info->coordinate->x_start),
 		&(fdf_info->coordinate->y_start),
-		z_start);
+		fdf_info->coordinate->z_start);
 	apply_degrees(&(fdf_info->coordinate->x_finish),
 		&(fdf_info->coordinate->y_finish),
-		z_finish);
+		fdf_info->coordinate->z_finish);
 	d = ft_abs_i(2 * (fdf_info->coordinate->y_finish
 				- fdf_info->coordinate->y_start));
 	dx = ft_abs_i(fdf_info->coordinate->x_finish

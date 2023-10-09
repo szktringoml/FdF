@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:45 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:42:24 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:35:49 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	read_fdf(t_fdf **fdf_info, char *filename)
 	(*fdf_info)->height = get_fdfheight(filename);
 	(*fdf_info)->width = get_fdfwidth(filename);
 	(*fdf_info)->z_values = malloc(sizeof(int *) * (*fdf_info)->height);
-	(*fdf_info)->z_values = get_fdfmap((*fdf_info)->z_values, filename,
+	(*fdf_info)->z_values = get_fdfmap(*fdf_info, (*fdf_info)->z_values, filename,
 			(*fdf_info)->width, (*fdf_info)->height);
 }
 
@@ -75,7 +75,7 @@ size_t	get_fdfwidth(char *filename)
 	return (width);
 }
 
-void	get_fdfmap_generate_array(int fd, int **z_values, size_t width,
+void	get_fdfmap_generate_array(t_fdf *fdf_info, int fd, int **z_values, size_t width,
 		size_t height)
 {
 	size_t	i;
@@ -93,9 +93,13 @@ void	get_fdfmap_generate_array(int fd, int **z_values, size_t width,
 		sp_row = ft_split(row, ' ');
 		free(row);
 		row_values = malloc(sizeof(int) * width);
+		if(row_values == NULL)
+			error_malloc();
 		while (sp_row[i] && i < width)
 		{
 			row_values[i] = ft_atoi(sp_row[i]);
+			if(ft_abs_i(row_values[i]) > fdf_info->z_max_abs)
+				fdf_info->z_max_abs = row_values[i];
 			i++;
 		}
 		error_fdf_format(i, width);
@@ -105,12 +109,12 @@ void	get_fdfmap_generate_array(int fd, int **z_values, size_t width,
 	}
 }
 
-int	**get_fdfmap(int **z_values, char *filename, size_t width, size_t height)
+int	**get_fdfmap(t_fdf *fdf_info, int **z_values, char *filename, size_t width, size_t height)
 {
 	int	fd;
 
 	fd = open(filename, O_RDONLY);
 	error_fd(fd);
-	get_fdfmap_generate_array(fd, z_values, width, height);
+	get_fdfmap_generate_array(fdf_info, fd, z_values, width, height);
 	return (z_values);
 }
