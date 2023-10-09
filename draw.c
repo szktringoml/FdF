@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:16:07 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 16:39:23 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:13:14 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void	bresenham_algo(t_fdf *fdf_info, int dx, int d)
 
 void	draw(t_fdf *fdf_info)
 {
-	int	x;
-	int	y;
+	size_t	x;
+	size_t	y;
 
 	y = 0;
 	while (y < fdf_info->height)

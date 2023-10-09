@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:45 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:02:18 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:13:31 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ size_t	get_fdfwidth(char *filename)
 	size_t	width;
 	char	*line;
 	char	**row_values;
-	size_t	i;
 
 	width = 0;
 	fd = open(filename, O_RDONLY);

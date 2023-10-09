@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:04:10 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:17:53 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ typedef struct s_fdf
 
 size_t				get_fdfheight(char *filename);
 
-void				split_free(char **str, size_t sec);
-
 size_t				get_fdfwidth(char *filename);
 
 int					**get_fdfmap(int **z_values, char *filename, size_t width,
@@ -98,7 +96,9 @@ int					deal_key(int key, t_fdf *fdf_info);
 int					close_window(t_fdf *fdf_info);
 
 void				error_filename(char *filename);
+
 void				error_fd(int fd);
+
 void				error_fdf_format(int i, int width);
 
 void				coordinate_init(t_coordinate *coordinate);
@@ -108,14 +108,19 @@ void				coordinate_store_x(t_coordinate *coordinate, int x, int y);
 void				coordinate_store_y(t_coordinate *coordinate, int x, int y);
 
 void				apply_degrees(int *x, int *y, int z);
+
 void				apply_properties_to_point(t_fdf *fdf_info);
+
 void				apply_zoom_to_one_line_points(t_fdf *fdf_info);
 
 void				apply_properties_to_one_line_points(t_fdf *fdf_info);
+
 void				bresenham_algo(t_fdf *fdf_info, int dx, int d);
 
 void				put_pixel_hub(t_fdf *fdf_info, int x, int y);
 
 void				draw(t_fdf *fdf_info);
+
+void				shift_map(t_fdf *fdf_info, int key);
 
 #endif

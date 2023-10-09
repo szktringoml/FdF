@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:07:41 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:21:47 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,11 @@ int	deal_key(int key, t_fdf *fdf_info)
 	if (fdf_info == NULL)
 		return (0);
 	//printf("%d\n", key);
-	if (key == PLUS && fdf_info->zoom < 1000)
-		fdf_info->zoom += 10;
-	if (key == MINUS && fdf_info->zoom > 10)
-		fdf_info->zoom -= 10;
-	if (key == ALLOW_TOP)
-		fdf_info->shift_y -= 10;
-	if (key == ALLOW_RIGHT)
-		fdf_info->shift_x += 10;
-	if (key == ALLOW_BOTTOM)
-		fdf_info->shift_y += 10;
-	if (key == ALLOW_LEFT)
-		fdf_info->shift_x -= 10;
+	if (key == PLUS || key == MINUS)
+		zoom_map(fdf_info, key);
+	if (key == ALLOW_TOP || key == ALLOW_RIGHT
+		|| key == ALLOW_BOTTOM || key == ALLOW_RIGHT)
+		shift_map(fdf_info, key);
 	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
 	fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr,
