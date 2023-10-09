@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:33:18 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:43:12 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:59:42 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ void	error_fd(int fd)
 	}
 }
 
-void    error_read(int read_status)
+void	error_read(int read_status)
 {
-    if (read_status <= 0)
+	if (read_status <= 0)
 	{
 		write(2, EMPTY_FDF_FILE, EMPTY_FDF_FILE_CC);
 		exit(BAD_EXIT);
 	}
 }
 
-void    error_malloc()
+void	error_malloc(void)
 {
-    write(2, MALLOC_FAIL, MALLOC_FAIL_CC);
+	write(2, MALLOC_FAIL, MALLOC_FAIL_CC);
 	exit(BAD_EXIT);
 }
 

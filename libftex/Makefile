@@ -6,7 +6,7 @@
 #    By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/02 13:12:57 by kousuzuk          #+#    #+#              #
-#    Updated: 2023/10/09 16:51:04 by kousuzuk         ###   ########.fr        #
+#    Updated: 2023/10/09 17:57:51 by kousuzuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 ${NAME}:	${OBJS}
 			ar rcs ${NAME} ${OBJS}

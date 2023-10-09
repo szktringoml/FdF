@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:21:47 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:00:38 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ int	deal_key(int key, t_fdf *fdf_info)
 {
 	if (fdf_info == NULL)
 		return (0);
-	//printf("%d\n", key);
 	if (key == PLUS || key == MINUS)
 		zoom_map(fdf_info, key);
-	if (key == ALLOW_TOP || key == ALLOW_RIGHT
-		|| key == ALLOW_BOTTOM || key == ALLOW_RIGHT)
+	if (key == ALLOW_TOP || key == ALLOW_RIGHT || key == ALLOW_BOTTOM
+		|| key == ALLOW_RIGHT)
 		shift_map(fdf_info, key);
 	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
@@ -56,9 +55,9 @@ int	close_window(t_fdf *fdf_info)
 	return (0);
 }
 
-// __attribute__((destructor))
-// static void destructor() {
-//     system("leaks -q fdf");
+// __attribute__((destructor)) static void destructor()
+// {
+// 	system("leaks -q fdf");
 // }
 
 void	fdf_info_init(t_fdf *fdf_info)
@@ -67,8 +66,7 @@ void	fdf_info_init(t_fdf *fdf_info)
 	fdf_info->shift_x = 300;
 	fdf_info->shift_y = 150;
 	fdf_info->mlx_ptr = mlx_init();
-	fdf_info->win_ptr = mlx_new_window(fdf_info->mlx_ptr, WIDTH, HEIGHT,
-			"FDF");
+	fdf_info->win_ptr = mlx_new_window(fdf_info->mlx_ptr, WIDTH, HEIGHT, "FDF");
 	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
 	fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr,
 			&fdf_info->bit_per_pixel,
