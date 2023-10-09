@@ -6,13 +6,16 @@
 #    By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 16:07:31 by kousuzuk          #+#    #+#              #
-#    Updated: 2023/10/08 14:06:48 by kousuzuk         ###   ########.fr        #
+#    Updated: 2023/10/09 16:55:10 by kousuzuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = fdf.c \
 	   draw.c \
 	   input_map.c \
+	   utils_draw.c \
+	   error_message.c \
+	   apply_properties.c \
 	   #operation.c
 	
 
@@ -24,7 +27,7 @@ MLX = minilibx_macos/libmlx.a
 CC	= cc
 CFLAGS = -Wall -Wextra -Werror
 
-all: ${NAME} $(LIBFT) $(MLX) ;
+all: $(LIBFT) ${NAME} $(MLX) ;
 
 #cflagsは今はいいや
 %.o: %.c
@@ -32,7 +35,7 @@ all: ${NAME} $(LIBFT) $(MLX) ;
 
 #gcc *.c libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
 #cflagsは今はいいや
-${NAME}: ${OBJS} $(LIBFT)
+${NAME}: $(LIBFT) ${OBJS}
 	$(CC) -c $(SRCS) -g
 	${CC} -o $@ $(SRCS) $(LIBFT) $(MLX) -g -framework OpenGL -framework AppKit 
 

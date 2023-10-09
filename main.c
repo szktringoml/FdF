@@ -1,9 +1,3 @@
-#include "fdf.h"
-int x_start;
-int x_finish;
-int y_start;
-int y_finish;
-
 // int main()
 // {
 //     float xi = 0;

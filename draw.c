@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/09 16:16:07 by kousuzuk          #+#    #+#             */
+/*   Updated: 2023/10/09 16:39:23 by kousuzuk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-void	degrees(int *x, int *y, int z)
+void	apply_degrees(int *x, int *y, int z)
 {
 	*x = (*x - *y) * cos(0.8);
 	*y = (*x + *y) * cos(0.8) - z;
@@ -19,33 +31,40 @@ void	put_pixel(t_fdf *fdf_info, int x, int y, int color)
 	}
 }
 
-void	bresenham(int x_start, int y_start, int x_finish, int y_finish,
-		t_fdf *fdf_info)
+void	put_pixel_hub(t_fdf *fdf_info, int x, int y)
 {
-	int	z_start;
-	int	z_finish;
-	int	d;
-	int	dx;
+	if (fdf_info->coordinate->x_start < fdf_info->coordinate->x_finish
+		&& fdf_info->coordinate->y_start < fdf_info->coordinate->y_finish)
+		put_pixel(fdf_info, fdf_info->coordinate->x_start + x
+			+ fdf_info->shift_x, fdf_info->coordinate->y_start + y
+			+ fdf_info->shift_y, fdf_info->color);
+	else if (fdf_info->coordinate->x_start > fdf_info->coordinate->x_finish
+		&& fdf_info->coordinate->y_start < fdf_info->coordinate->y_finish)
+		put_pixel(fdf_info, fdf_info->coordinate->x_start - x
+			+ fdf_info->shift_x, fdf_info->coordinate->y_start + y
+			+ fdf_info->shift_y, fdf_info->color);
+	else if (fdf_info->coordinate->x_start > fdf_info->coordinate->x_finish
+		&& fdf_info->coordinate->y_start > fdf_info->coordinate->y_finish)
+		put_pixel(fdf_info, fdf_info->coordinate->x_start - x
+			+ fdf_info->shift_x, fdf_info->coordinate->y_start - y
+			+ fdf_info->shift_y, fdf_info->color);
+	else if (fdf_info->coordinate->x_start < fdf_info->coordinate->x_finish
+		&& fdf_info->coordinate->y_start > fdf_info->coordinate->y_finish)
+		put_pixel(fdf_info, fdf_info->coordinate->x_start + x
+			+ fdf_info->shift_x, fdf_info->coordinate->y_start - y
+			+ fdf_info->shift_y, fdf_info->color);
+}
 
-	z_start = fdf_info->z_values[y_start][x_start];
-	z_finish = fdf_info->z_values[y_finish][x_finish];
-	fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff;
-	x_start = x_start * fdf_info->zoom;
-	y_start = y_start * fdf_info->zoom;
-	x_finish = x_finish * fdf_info->zoom;
-	y_finish = y_finish * fdf_info->zoom;
-	degrees(&x_start, &y_start, z_start);
-	degrees(&x_finish, &y_finish, z_finish);
-	d = ft_abs_i(2 * (y_finish - y_start));
-	dx = ft_abs_i(x_finish - x_start);
-
+void	bresenham_algo(t_fdf *fdf_info, int dx, int d)
+{
 	int	e;
 	int	y;
 	int	x;
+
 	x = 0;
 	e = 0;
 	y = 0;
-	while (x < dx) //dxが0だと入らないので条件分岐が必要
+	while (x < dx)
 	{
 		e = e + d;
 		if (e > dx)
@@ -53,42 +72,36 @@ void	bresenham(int x_start, int y_start, int x_finish, int y_finish,
 			y = y + 1;
 			e = e - (2 * dx);
 		}
-		if (x_start < x_finish && y_start < y_finish) //x:+方向 y:+方向
-			put_pixel(fdf_info, x_start + x + fdf_info->shift_x, y_start + y
-					+ fdf_info->shift_y, fdf_info->color);
-		else if (x_start > x_finish && y_start < y_finish) //x:-方向 y:+方向
-			put_pixel(fdf_info, x_start - x + fdf_info->shift_x, y_start + y
-					+ fdf_info->shift_y, fdf_info->color);
-		else if (x_start > x_finish && y_start > y_finish) //x:-方向 y:-方向
-			put_pixel(fdf_info, x_start - x + fdf_info->shift_x, y_start - y
-					+ fdf_info->shift_y, fdf_info->color);
-		else if (x_start < x_finish && y_start > y_finish) //x:+方向 y:-方向
-			put_pixel(fdf_info, x_start + x + fdf_info->shift_x, y_start - y
-					+ fdf_info->shift_y, fdf_info->color);
+		put_pixel_hub(fdf_info, x, y);
 		x++;
 	}
 }
 
 void	draw(t_fdf *fdf_info)
 {
-	int x;
-	int y;
-	int i = 0;
-	y = 0;
+	int	x;
+	int	y;
 
+	y = 0;
 	while (y < fdf_info->height)
 	{
 		x = 0;
 		while (x < fdf_info->width)
 		{
 			if (x < fdf_info->width - 1)
-				bresenham(x, y, x + 1, y, fdf_info);
+			{
+				coordinate_store_x(fdf_info->coordinate, x, y);
+				apply_properties_to_one_line_points(fdf_info);
+			}
 			if (y < fdf_info->height - 1)
-				bresenham(x, y, x, y + 1, fdf_info);
+			{
+				coordinate_store_y(fdf_info->coordinate, x, y);
+				apply_properties_to_one_line_points(fdf_info);
+			}
 			x++;
 		}
 		y++;
 	}
 	mlx_put_image_to_window(fdf_info->mlx_ptr, fdf_info->win_ptr,
-			fdf_info->img_ptr, 0, 0);
+		fdf_info->img_ptr, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 09:38:54 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/07 16:02:43 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 16:51:22 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putstr_fd(char *s, int fd);
 
 char				**ft_split(char const *s, char c);
+
+void				ft_split_memory_cleaner(size_t memory_len, char **array);
 
 char				*ft_strchr(const char *s, int c);
 
