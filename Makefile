@@ -6,7 +6,7 @@
 #    By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 16:07:31 by kousuzuk          #+#    #+#              #
-#    Updated: 2023/10/09 17:25:42 by kousuzuk         ###   ########.fr        #
+#    Updated: 2023/10/09 17:26:58 by kousuzuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,15 +29,13 @@ CFLAGS = -Wall -Wextra -Werror
 
 all: $(LIBFT) ${NAME} $(MLX) ;
 
-#cflagsは今はいいや
 %.o: %.c
 	$(CC) $(CFLAGS) -c -g $< -o $@
 
 #gcc *.c libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
-#cflagsは今はいいや
 ${NAME}: $(LIBFT) ${OBJS}
-	$(CC) $(CFLAGS) -c $(SRCS) -g
-	${CC} $(CFLAGS) -o $@ $(SRCS) $(LIBFT) $(MLX) -g -framework OpenGL -framework AppKit 
+	$(CC) $(CFLAGS) -c $(SRCS)
+	${CC} $(CFLAGS) -o $@ $(SRCS) $(LIBFT) $(MLX) -framework OpenGL -framework AppKit 
 
 
 $(LIBFT):

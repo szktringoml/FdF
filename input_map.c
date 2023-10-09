@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:45 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:13:31 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:42:24 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,21 @@
 
 void	read_fdf(t_fdf **fdf_info, char *filename)
 {
+	int		fd;
+	int		read_status;
+	char	*str;
+
+	fd = open(filename, O_RDONLY);
+	error_fd(fd);
+	str = malloc(sizeof(char));
+	if (!str)
+		error_malloc();
+	read_status = 0;
+	read_status = read(fd, str, 1);
+	error_read(read_status);
+	free(str);
 	(*fdf_info)->height = get_fdfheight(filename);
 	(*fdf_info)->width = get_fdfwidth(filename);
-	printf("height = %zu\n", (*fdf_info)->height);
-	printf("width = %zu\n", (*fdf_info)->width);
 	(*fdf_info)->z_values = malloc(sizeof(int *) * (*fdf_info)->height);
 	(*fdf_info)->z_values = get_fdfmap((*fdf_info)->z_values, filename,
 			(*fdf_info)->width, (*fdf_info)->height);

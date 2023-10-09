@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:22:51 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:44:53 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 # define BAD_EXIT 1
 # define SUCCESS_EXIT 0
+
 # define NON_FILENAME_ARGUMENT "Usage: ./fdf \"<.fdf file>\"\n"
 # define NON_FILENAME_ARGUMENT_CC 27
 
@@ -48,6 +49,12 @@ Please double check the path and name.\n"
 # define FDF_FILE_DEFFELENT_FORMAT "fdf file is invalid. \
 Please load a file with the correct format.\n"
 # define FDF_FILE_DEFFELENT_FORMAT_CC 65
+
+# define EMPTY_FDF_FILE "The specified file was empty.\n"
+# define EMPTY_FDF_FILE_CC 30
+
+# define MALLOC_FAIL "malloc fail\n"
+# define MALLOC_FAIL_CC 22
 
 typedef struct s_coordinate
 {
@@ -98,6 +105,10 @@ int					close_window(t_fdf *fdf_info);
 void				error_filename(char *filename);
 
 void				error_fd(int fd);
+
+void				error_read(int read_status);
+
+void				error_malloc(void);
 
 void				error_fdf_format(int i, int width);
 

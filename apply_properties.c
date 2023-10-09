@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:09 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:06:59 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:28:43 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	apply_properties_to_one_line_points(t_fdf *fdf_info)
 	[fdf_info->coordinate->x_start];
 	z_finish = fdf_info->z_values[fdf_info->coordinate->y_finish]
 	[fdf_info->coordinate->x_finish];
-	fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff; ///////////////normここだけ
+	fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff; ///////////////normここだけ(4コつく)
 	apply_zoom_to_one_line_points(fdf_info);
 	apply_degrees(&(fdf_info->coordinate->x_start),
 		&(fdf_info->coordinate->y_start),
