@@ -6,7 +6,7 @@
 #    By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 16:07:31 by kousuzuk          #+#    #+#              #
-#    Updated: 2023/10/09 17:17:11 by kousuzuk         ###   ########.fr        #
+#    Updated: 2023/10/09 17:25:42 by kousuzuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ $(MLX):
 	make -C minilibx_macos
 
 clean: 
+	make fclean -C libftex
 	rm -rf $(LIBFT)
 	rm -rf ${OBJS}
 
