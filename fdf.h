@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:17:53 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:22:51 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,7 @@ void				put_pixel_hub(t_fdf *fdf_info, int x, int y);
 void				draw(t_fdf *fdf_info);
 
 void				shift_map(t_fdf *fdf_info, int key);
+
+void				zoom_map(t_fdf *fdf_info, int key);
 
 #endif
