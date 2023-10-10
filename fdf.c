@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 18:00:38 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:57:57 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	fdf_info_init(t_fdf *fdf_info)
 			&fdf_info->size_line,
 			&fdf_info->endian);
 	fdf_info->coordinate = (t_coordinate *)malloc(sizeof(t_coordinate));
+
 	coordinate_init(fdf_info->coordinate);
 }
 
@@ -83,6 +84,7 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		fdf_info = (t_fdf *)malloc(sizeof(t_fdf));
+		fdf_info->color_info = (t_color *)malloc(sizeof(t_color));
 		error_filename(argv[1]);
 		read_fdf(&fdf_info, argv[1]);
 		fdf_info_init(fdf_info);

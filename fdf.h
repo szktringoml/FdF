@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 18:36:30 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:06:25 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,21 @@ typedef struct s_coordinate
 	int				x_finish;
 	int				y_finish;
 	int				z_finish;
-
+	int 			decreace_flag;
 
 }					t_coordinate;
+
+typedef struct s_color
+{
+	int				color;
+	int				z_max_abs;
+	int 			color_max;
+	int 			color_min;
+	int 			color_step;
+
+}					t_color;
+
+
 
 typedef struct s_fdf
 {
@@ -81,8 +93,7 @@ typedef struct s_fdf
 	int				bit_per_pixel;
 	int				endian;
 	t_coordinate	*coordinate;
-	int				color;
-	int				z_max_abs;
+	t_color 		*color_info;
 	size_t			zoom;
 	size_t			shift_x;
 	size_t			shift_y;
@@ -140,6 +151,10 @@ void				shift_map(t_fdf *fdf_info, int key);
 
 void				zoom_map(t_fdf *fdf_info, int key);
 
-void	get_color_by_z_value(t_fdf *fdf_info, int dx, int x);
+void get_min_max_z(t_fdf *fdf_info, int *minz, int *maxz);
+
+void get_color_min_max_in_this_line(t_fdf *fdf_info, int minz, int *want_color);
+
+void 	get_color_range_in_this_line(t_fdf *fdf_info);
 
 #endif
