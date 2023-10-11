@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:44:53 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:48:15 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
+
+# define ESC 53
 
 # define PLUS 24
 # define MINUS 27
