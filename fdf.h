@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/10 17:06:25 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:03:16 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_coordinate
 	int				y_finish;
 	int				z_finish;
 	int 			decreace_flag;
-
 }					t_coordinate;
 
 typedef struct s_color
@@ -75,6 +74,17 @@ typedef struct s_color
 	int 			color_max;
 	int 			color_min;
 	int 			color_step;
+	int 			start_color;
+	int 			finish_color;
+
+	int				r_step;
+	int 			r_bresenham_e;
+
+	int				g_step;
+	int 			g_bresenham_e;
+	
+	int				b_step;
+	int 			b_bresenham_e;
 
 }					t_color;
 

@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:09 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/10 16:54:54 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:23:24 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	apply_properties_to_one_line_points(t_fdf *fdf_info)
 {
 	int	d;
 	int	dx;
-
+	
 	fdf_info->coordinate->z_start = fdf_info->z_values[fdf_info->coordinate->y_start]
 	[fdf_info->coordinate->x_start];
 	fdf_info->coordinate->z_finish = fdf_info->z_values[fdf_info->coordinate->y_finish]

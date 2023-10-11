@@ -113,5 +113,23 @@ int main(){
     printf("%x\n", color);
 
 
+
+    int base = 0xffeeaa;
+    int r_dcolor = 7;
+    printf("%x\n", (base >> 16)&BITMASK);
+    printf("%x\n", (base >> 8)&BITMASK);
+    printf("%x\n", (base)&BITMASK);
+    base = base + (r_dcolor << 16);
+    printf("r_decimal to hex by 16 bit shift %x\n", base);
+    int g_dcolor = 7;
+
+    base = base + (g_dcolor << 8);
+    printf("decimal to hex by 16 bit shift %x\n", base);
+    int b_dcolor = 7;
+
+    base = base + (b_dcolor);
+    printf("decimal to hex by 16 bit shift %x\n", base);
+
+
     return 0;
 }
