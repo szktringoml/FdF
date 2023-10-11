@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 14:03:16 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:51:29 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,9 @@ void get_min_max_z(t_fdf *fdf_info, int *minz, int *maxz);
 void get_color_min_max_in_this_line(t_fdf *fdf_info, int minz, int *want_color);
 
 void 	get_color_range_in_this_line(t_fdf *fdf_info);
+
+void    get_each_rgbcolor_step(t_fdf *fdf_info, int x);
+
+int calc_rgb_hexa(t_fdf *fdf_info);
 
 #endif

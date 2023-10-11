@@ -114,11 +114,11 @@ int main(){
 
 
 
-    int base = 0xffeeaa;
+    int base = 0;
     int r_dcolor = 7;
-    printf("%x\n", (base >> 16)&BITMASK);
-    printf("%x\n", (base >> 8)&BITMASK);
-    printf("%x\n", (base)&BITMASK);
+    // printf("%x\n", (base >> 16)&BITMASK);
+    // printf("%x\n", (base >> 8)&BITMASK);
+    // printf("%x\n", (base)&BITMASK);
     base = base + (r_dcolor << 16);
     printf("r_decimal to hex by 16 bit shift %x\n", base);
     int g_dcolor = 7;
