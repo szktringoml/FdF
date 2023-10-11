@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:09 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 18:31:09 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:40:13 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ void	apply_zoom_to_one_line_points(t_fdf *fdf_info)
 		* fdf_info->zoom;
 }
 
+void	get_z_color(t_fdf *fdf_info, int z_start)
+{
+	if (z_start > 0)
+		fdf_info->color = 0xff2222;
+	else if (z_start < 0)
+		fdf_info->color = 0x7777ff;
+	else
+		fdf_info->color = 0xffffff;
+}
+
 void	apply_properties_to_one_line_points(t_fdf *fdf_info)
 {
 	int	z_start;
@@ -35,14 +45,7 @@ void	apply_properties_to_one_line_points(t_fdf *fdf_info)
 	[fdf_info->coordinate->x_start];
 	z_finish = fdf_info->z_values[fdf_info->coordinate->y_finish]
 	[fdf_info->coordinate->x_finish];
-	printf("%d\n", z_start);
-	if(z_start > 0)
-		fdf_info->color = 0xff2222;
-	else if(z_start < 0)
-		fdf_info->color = 0x7777ff;
-	else
-		fdf_info->color =  0xffffff;
-	// fdf_info->color = (z_start) ? 0xe80c0c : 0xffffff; ///////////////normここだけ(4コつく)
+	get_z_color(fdf_info, z_start);
 	apply_zoom_to_one_line_points(fdf_info);
 	apply_degrees(&(fdf_info->coordinate->x_start),
 		&(fdf_info->coordinate->y_start),
