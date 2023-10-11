@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 18:17:03 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 16:47:18 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:05:13 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,16 @@ int calc_rgb_hexa(t_fdf *fdf_info)
     int r_start = (fdf_info->color_info->color >> 16)&BITMASK;
     int g_start= (fdf_info->color_info->color >> 8)&BITMASK;
     int b_start= (fdf_info->color_info->color)&BITMASK;
-    printf("r start      = %d\n", r_start);
-    printf("g start      = %d\n", g_start);
-    printf("b start      = %d\n", b_start);
+    // printf("[%d] + %d = %d\n", r_start, fdf_info->color_info->r_step, r_start + fdf_info->color_info->r_step);
+    // printf("[%d] + %d = %d\n", g_start, fdf_info->color_info->g_step, g_start + fdf_info->color_info->g_step);
+    // printf("[%d] + %d = %d\n", b_start, fdf_info->color_info->b_step, b_start + fdf_info->color_info->b_step);
     hexa = 0;
-    printf("r step = %d\n", fdf_info->color_info->r_step);
-    printf("g step = %d\n", fdf_info->color_info->g_step);
-    printf("b step = %d\n", fdf_info->color_info->b_step);
-    
     hexa = ((r_start + fdf_info->color_info->r_step) << 16);
-    printf("hexa red = %x\n", hexa);
+    // printf("apply hexa red = %x\n", hexa);
     hexa = hexa + ((g_start + fdf_info->color_info->g_step) << 8);
-    printf("hexa green = %x\n", hexa);
+    // printf("apply hexa green = %x\n", hexa);
     hexa = hexa + b_start + fdf_info->color_info->b_step;
-    printf("hexa blue = %x\n", hexa);
-
-    printf("hexa = %x \n", hexa);
+    // printf("apply hexa blue = %x\n", hexa);
     return hexa;
 }
 
@@ -151,7 +145,6 @@ void    get_each_rgbcolor_step(t_fdf *fdf_info, int x)
     else{
         fdf_info->color_info->r_step = ((f_temp - s_temp)/zoom) * x;
     } 
-    printf("r_step = %d\n",fdf_info->color_info->r_step);
     f_temp = (fdf_info->color_info->finish_color>>8)&(BITMASK);//直接書き込んで演算すると負にならなかった
     s_temp = (fdf_info->color_info->start_color>>8)&(BITMASK);
     if((f_temp - s_temp)/zoom == 0)
@@ -159,7 +152,6 @@ void    get_each_rgbcolor_step(t_fdf *fdf_info, int x)
     else{
         fdf_info->color_info->g_step = ((f_temp - s_temp)/zoom) * x;
     } 
-    printf("g_step = %d\n",fdf_info->color_info->g_step);
     f_temp = (fdf_info->color_info->finish_color)&(BITMASK);//直接書き込んで演算すると負にならなかった
     s_temp = (fdf_info->color_info->start_color)&(BITMASK);
     if((f_temp - s_temp)/zoom == 0)
@@ -167,7 +159,6 @@ void    get_each_rgbcolor_step(t_fdf *fdf_info, int x)
     else{
         fdf_info->color_info->b_step = ((f_temp - s_temp)/zoom) * x;
     } 
-    printf("b_step = %d\n",fdf_info->color_info->b_step);
 }
 
 
@@ -184,6 +175,7 @@ void get_start_finish_color_of_each_point(t_fdf *fdf_info)
         fdf_info->color_info->start_color = fdf_info->color_info->color_max;
         fdf_info->color_info->finish_color = fdf_info->color_info->color_min;
     }
+    printf("start_color : %x → finish_color : %x\n", fdf_info->color_info->start_color, fdf_info->color_info->finish_color);
 }
 
 void color_properties_init(t_fdf *fdf_info)
@@ -203,16 +195,11 @@ void	get_color_range_in_this_line(t_fdf *fdf_info)
 {
     int minz = 0;
     int maxz = 0;
-    int color_min = 0;
-    int color_max = 0;
     
     color_properties_init(fdf_info);
     get_min_max_z(fdf_info, &minz, &maxz);
     get_color_min_max_in_this_line(fdf_info, minz, &fdf_info->color_info->color_min);
     get_color_min_max_in_this_line(fdf_info, maxz, &fdf_info->color_info->color_max);
-    if(color_min > color_max)
-        write(2, "ありえないことが起きている\n", 14);
-    //get_each_rgbcolor_step(fdf_info);
     get_start_finish_color_of_each_point(fdf_info);
 }
 

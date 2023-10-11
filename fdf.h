@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 15:13:38 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:17:02 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ typedef struct s_fdf
 	t_color 		*color_info;
 	int				z_max_abs;
 	size_t			zoom;
-	size_t			shift_x;
-	size_t			shift_y;
+	size_t 			shift_x;
+	size_t 		shift_y;
 }					t_fdf;
 
 size_t				get_fdfheight(char *filename);

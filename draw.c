@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:16:07 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 17:32:49 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:09:42 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	put_pixel_hub(t_fdf *fdf_info, int x, int y)
 		//rgbそれぞれがxのときにどのようにステップするか
 		get_each_rgbcolor_step(fdf_info, x);
 		fdf_info->color_info->color = calc_rgb_hexa(fdf_info);
-		printf("		color = %x\n", fdf_info->color_info->color);
+		printf("-----------------color = %x\n", fdf_info->color_info->color);
 		
 	}
 
@@ -104,7 +104,7 @@ void	draw(t_fdf *fdf_info)
 		x = 0;
 		while (x < fdf_info->width)
 		{
-			printf("(y = %zu, x = %zu)\n", y, x);
+			printf("========================(y = %zu, x = %zu)========================\n", y, x);
 			if (x < fdf_info->width - 1)
 			{
 				coordinate_store_x(fdf_info->coordinate, x, y);
