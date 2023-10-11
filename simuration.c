@@ -119,17 +119,26 @@ int main(){
     // printf("%x\n", (base >> 16)&BITMASK);
     // printf("%x\n", (base >> 8)&BITMASK);
     // printf("%x\n", (base)&BITMASK);
-    base = base + (r_dcolor << 16);
-    printf("r_decimal to hex by 16 bit shift %x\n", base);
-    int g_dcolor = 7;
+    // base = base + (r_dcolor << 16);
+    // printf("r_decimal to hex by 16 bit shift %x\n", base);
+    // int g_dcolor = 7;
 
-    base = base + (g_dcolor << 8);
-    printf("decimal to hex by 16 bit shift %x\n", base);
-    int b_dcolor = 7;
+    // base = base + (g_dcolor << 8);
+    // printf("decimal to hex by 16 bit shift %x\n", base);
+    // int b_dcolor = 7;
 
-    base = base + (b_dcolor);
-    printf("decimal to hex by 16 bit shift %x\n", base);
-
+    // base = base + (b_dcolor);
+    // printf("decimal to hex by 16 bit shift %x\n", base);
+    int f_temp = (0xff00>>16)&(BITMASK);//直接書き込んで演算すると負にならなかった
+    int s_temp = (0xfa0000>>16)&(BITMASK);
+    int zoom = 30;
+    printf("r f_temp = %d\n", (0xff00>>16)&(BITMASK));
+    printf("r s_temp = %d\n", (0xfa0000>>16)&(BITMASK));
+    int fs_diff = (f_temp - s_temp);
+    int r_step = (fs_diff/zoom) * 8;
+    printf("r step 計算f_temp - s_temp =  %d\n",fs_diff);
+    printf("r step 計算((f_temp - s_temp)/fdf_info->zoom) = %d\n", (int)(fs_diff/zoom));
+    printf("r step 計算直後 %d\n", r_step);
 
     return 0;
 }

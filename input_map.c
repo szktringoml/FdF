@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:45 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/10 16:54:04 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:12:29 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,9 @@ void	get_fdfmap_generate_array(t_fdf *fdf_info, int fd, int **z_values, size_t w
 		while (sp_row[i] && i < width)
 		{
 			row_values[i] = ft_atoi(sp_row[i]);
-			if(ft_abs_i(row_values[i]) > fdf_info->color_info->z_max_abs)
-				fdf_info->color_info->z_max_abs = row_values[i];
+			if(ft_abs_i(row_values[i]) > fdf_info->z_max_abs){
+				fdf_info->z_max_abs = row_values[i];
+			}
 			i++;
 		}
 		error_fdf_format(i, width);

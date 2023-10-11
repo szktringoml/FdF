@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/10 16:57:57 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:09:48 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		fdf_info = (t_fdf *)malloc(sizeof(t_fdf));
+		fdf_info_init(fdf_info);
 		fdf_info->color_info = (t_color *)malloc(sizeof(t_color));
 		error_filename(argv[1]);
 		read_fdf(&fdf_info, argv[1]);
-		fdf_info_init(fdf_info);
 		draw(fdf_info);
 		mlx_key_hook(fdf_info->win_ptr, deal_key, fdf_info);
 		mlx_hook(fdf_info->win_ptr, 17, 1L << 17, close_window, fdf_info);

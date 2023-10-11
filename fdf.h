@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 14:51:29 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:13:38 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,8 @@ typedef struct s_coordinate
 typedef struct s_color
 {
 	int				color;
-	int				z_max_abs;
 	int 			color_max;
 	int 			color_min;
-	int 			color_step;
 	int 			start_color;
 	int 			finish_color;
 
@@ -104,6 +102,7 @@ typedef struct s_fdf
 	int				endian;
 	t_coordinate	*coordinate;
 	t_color 		*color_info;
+	int				z_max_abs;
 	size_t			zoom;
 	size_t			shift_x;
 	size_t			shift_y;
