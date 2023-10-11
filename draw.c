@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:16:07 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:13:14 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 17:27:38 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ void	bresenham_algo(t_fdf *fdf_info, int dx, int d)
 		{
 			y = y + 1;
 			e = e - (2 * dx);
+			while(e > dx)
+			{
+				put_pixel_hub(fdf_info, x, y);
+				y = y + 1;
+				e = e - (2 * dx);
+			}
+
 		}
 		put_pixel_hub(fdf_info, x, y);
 		x++;
