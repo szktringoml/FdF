@@ -51,7 +51,7 @@ void get_color_min_max_in_this_line(t_fdf *fdf_info, int minz, int *want_color)
     else
         *want_color = green;
 }
-
+//stepを計算したい、これをz_startのcolorに足すだけで良くなるように
 void    get_color_step(t_fdf *fdf_info)
 {
     int r_diff;
@@ -64,7 +64,8 @@ void    get_color_step(t_fdf *fdf_info)
         printf("この線は緑\n");
     }
     else
-    {
+    {   
+        //ここ、ちゃんとdiff取れてんの？
         r_diff = (fdf_info->color_info->color_max  - fdf_info->color_info->color_min)/fdf_info->zoom;
         g_diff = ((fdf_info->color_info->color_max >> 8) - (fdf_info->color_info->color_min >> 8))/fdf_info->zoom;
         b_diff = ((fdf_info->color_info->color_max >> 16)  - (fdf_info->color_info->color_min >> 16))/fdf_info->zoom;
@@ -89,6 +90,7 @@ void	get_color_range_in_this_line(t_fdf *fdf_info)
     if(color_min > color_max)
         write(2, "ありえないことが起きている\n", 14);
     get_color_step(fdf_info);
+    //z_start時点でのcolorを格納する。
     if(fdf_info->coordinate->decreace_flag == 0)
         fdf_info->color_info->color = fdf_info->color_info->color_min;
     else
