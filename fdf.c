@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 18:15:42 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:35:35 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	deal_key(int key, t_fdf *fdf_info)
 	if (key == PLUS || key == MINUS)
 		zoom_map(fdf_info, key);
 	if (key == ALLOW_TOP || key == ALLOW_RIGHT || key == ALLOW_BOTTOM
-		|| key == ALLOW_RIGHT)
+		|| key == ALLOW_LEFT)
 		shift_map(fdf_info, key);
 	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
