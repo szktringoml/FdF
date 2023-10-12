@@ -67,22 +67,59 @@ typedef struct s_coordinate
 	int 			decreace_flag;
 }					t_coordinate;
 
+typedef struct s_rgb_color_red
+{
+	int s_temp;
+    int f_temp;
+	int				color_sf_diff;
+	int				color_sf_diff_div_zoom;
+
+	int				step;
+	int 			delta_color;
+	int 			xi;
+	int 			diff;
+	int 			bresenham_e;
+}			t_rgb_color_red;
+
+typedef struct s_rgb_color_green
+{
+	int s_temp;
+    int f_temp;
+	int				color_sf_diff;
+	int				color_sf_diff_div_zoom;
+
+	int				step;
+	int 			delta_color;
+	int 			xi;
+	int 			diff;
+	int 			bresenham_e;
+}			t_rgb_color_green;
+
+typedef struct s_rgb_color_blue
+{
+	int s_temp;
+    int f_temp;
+	int				color_sf_diff;
+	int				color_sf_diff_div_zoom;
+
+	int				step;
+	int 			delta_color;
+	int 			xi;
+	int 			diff;
+	int 			bresenham_e;
+}			t_rgb_color_blue;
+
+
 typedef struct s_color
 {
-	int				color;
-	int 			color_max;
-	int 			color_min;
-	int 			start_color;
-	int 			finish_color;
-
-	int				r_step;
-	int 			r_bresenham_e;
-
-	int				g_step;
-	int 			g_bresenham_e;
-	
-	int				b_step;
-	int 			b_bresenham_e;
+	int					color;
+	int 				color_max;
+	int 				color_min;
+	int 				start_color;
+	int 				finish_color;
+	t_rgb_color_red		*red_progress;
+	t_rgb_color_green	*green_progress;
+	t_rgb_color_blue	*blue_progress;
 
 }					t_color;
 

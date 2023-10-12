@@ -21,80 +21,70 @@ int calc_rgb_hexa(t_fdf *fdf_info)
     int r_start = (fdf_info->color_info->color >> 16)&BITMASK;
     int g_start= (fdf_info->color_info->color >> 8)&BITMASK;
     int b_start= (fdf_info->color_info->color)&BITMASK;
-    // printf("[%d] + %d = %d\n", r_start, fdf_info->color_info->r_step, r_start + fdf_info->color_info->r_step);
-    // printf("[%d] + %d = %d\n", g_start, fdf_info->color_info->g_step, g_start + fdf_info->color_info->g_step);
-    // printf("[%d] + %d = %d\n", b_start, fdf_info->color_info->b_step, b_start + fdf_info->color_info->b_step);
+    // printf("[%d] + %d = %d\n", r_start, fdf_info->color_info->red_progress->step, r_start + fdf_info->color_info->red_progress->step);
+    // printf("[%d] + %d = %d\n", g_start, fdf_info->color_info->green_progress->step, g_start + fdf_info->color_info->green_progress->step);
+    // printf("[%d] + %d = %d\n", b_start, fdf_info->color_info->blue_progress->step, b_start + fdf_info->color_info->blue_progress->step);
     hexa = 0;
-    hexa = ((r_start + fdf_info->color_info->r_step) << 16);
+    hexa = ((r_start + fdf_info->color_info->red_progress->step) << 16);
     // printf("apply hexa red = %x\n", hexa);
-    hexa = hexa + ((g_start + fdf_info->color_info->g_step) << 8);
+    hexa = hexa + ((g_start + fdf_info->color_info->green_progress->step) << 8);
     // printf("apply hexa green = %x\n", hexa);
-    hexa = hexa + b_start + fdf_info->color_info->b_step;
+    hexa = hexa + b_start + fdf_info->color_info->blue_progress->step;
     // printf("apply hexa blue = %x\n", hexa);
     return hexa;
 }
 
-int bresenham_color_red(t_fdf *fdf_info, int x)
-{
-    int i = 0;
-    int diff = 0;
-    size_t e = 0;
-    int delta_color = ft_abs_i(2 * (fdf_info->color_info->finish_color >> 16)&BITMASK -  (fdf_info->color_info->start_color >> 16)&BITMASK);
-    while(i < x)
+int bresenham_color_red(t_rgb_color_red *red_progress, int x, int zoom)
+{   
+    while(red_progress->xi < x)
     {
-        e = e + delta_color;
-        if(e > fdf_info->zoom)
+        red_progress->bresenham_e = red_progress->bresenham_e + red_progress->delta_color;
+        if(red_progress->bresenham_e > zoom)
         {
-            diff = diff + 1;
-            e = e - (2 * fdf_info->zoom);
+            red_progress->diff = red_progress->diff + 1;
+            red_progress->bresenham_e = red_progress->bresenham_e - (2 * zoom);
         }
-        i++;
+        red_progress->xi++;
     }
 
-    return diff;
-}
-int bresenham_color_green(t_fdf *fdf_info, int x)
-{
-    int i = 0;
-    int diff = 0;
-    size_t e = 0;
-    int delta_color = ft_abs_i(2 * ((fdf_info->color_info->finish_color >> 8)&BITMASK - (fdf_info->color_info->start_color >> 8)&BITMASK));
-    while(i < x)
-    {
-        e = e + delta_color;
-        if(e > fdf_info->zoom)
-        {
-            diff = diff + 1;
-            e = e - (2 * fdf_info->zoom);
-        }
-        i++;
-    }
-    return diff;
+    return red_progress->diff;
 }
 
-int bresenham_color_blue(t_fdf *fdf_info, int x)
-{
-    int i = 0;
-    int diff = 0;
-    size_t e = 0;
-    int delta_color = ft_abs_i(2 * (fdf_info->color_info->finish_color)&BITMASK - (fdf_info->color_info->start_color)&BITMASK);
-    while(i < x)
+int bresenham_color_green(t_rgb_color_green *green_progress, int x, int zoom)
+{   
+    while(green_progress->xi < x)
     {
-        e = e + delta_color;
-        if(e > fdf_info->zoom)
+        green_progress->bresenham_e = green_progress->bresenham_e + green_progress->delta_color;
+        if(green_progress->bresenham_e > zoom)
         {
-            diff = diff + 1;
-            e = e - (2 * fdf_info->zoom);
+            green_progress->diff = green_progress->diff + 1;
+            green_progress->bresenham_e = green_progress->bresenham_e - (2 * zoom);
         }
-        i++;
+        green_progress->xi++;
     }
-    return i;
+
+    return green_progress->diff;
+}
+
+int bresenham_color_blue(t_rgb_color_blue *blue_progress, int x, int zoom)
+{   
+    while(blue_progress->xi < x)
+    {
+        blue_progress->bresenham_e = blue_progress->bresenham_e + blue_progress->delta_color;
+        if(blue_progress->bresenham_e > zoom)
+        {
+            blue_progress->diff = blue_progress->diff + 1;
+            blue_progress->bresenham_e = blue_progress->bresenham_e - (2 * zoom);
+        }
+        blue_progress->xi++;
+    }
+
+    return blue_progress->diff;
 }
 
 
 void get_min_max_z(t_fdf *fdf_info, int *minz, int *maxz)
 {
-    //printf("zs = %d, zf = %d\n",fdf_info->coordinate->z_start , fdf_info->coordinate->z_finish);
     if(fdf_info->coordinate->z_start < fdf_info->coordinate->z_finish)
     {
         *minz = fdf_info->coordinate->z_start;
@@ -135,36 +125,36 @@ void get_color_min_max_in_this_line(t_fdf *fdf_info, int z, int *want_color)
 //xのときcolorにどれくらい足せば良いか知りたい
 void    get_each_rgbcolor_step(t_fdf *fdf_info, int x)
 {
-    int s_temp;
-    int f_temp;
     int zoom = fdf_info->zoom;
-    f_temp = (fdf_info->color_info->finish_color >>16)&(BITMASK);//直接書き込んで演算すると負にならなかった
-    s_temp = (fdf_info->color_info->start_color >>16)&(BITMASK);
-    if((f_temp - s_temp)/zoom == 0)
-        fdf_info->color_info->r_step = bresenham_color_blue(fdf_info, x);
+
+    
+    if(fdf_info->color_info->red_progress->color_sf_diff/zoom == 0)
+    {
+        fdf_info->color_info->red_progress->delta_color = ft_abs_i(2 * (fdf_info->color_info->finish_color >> 16)&BITMASK -  (fdf_info->color_info->start_color >> 16)&BITMASK);
+        fdf_info->color_info->red_progress->step = bresenham_color_red(fdf_info->color_info->red_progress, x, fdf_info->zoom);
+    }
+    else
+        fdf_info->color_info->red_progress->step = (fdf_info->color_info->green_progress->color_sf_diff/zoom) * x;
+    if(fdf_info->color_info->green_progress->color_sf_diff/zoom == 0)
+    {
+        fdf_info->color_info->red_progress->delta_color = ft_abs_i(2 * ((fdf_info->color_info->finish_color >> 8)&BITMASK - (fdf_info->color_info->start_color >> 8)&BITMASK));
+        fdf_info->color_info->green_progress->step = bresenham_color_green(fdf_info->color_info->green_progress, x, fdf_info->zoom);
+    }
     else{
-        fdf_info->color_info->r_step = ((f_temp - s_temp)/zoom) * x;
+        fdf_info->color_info->green_progress->step = (fdf_info->color_info->green_progress->color_sf_diff/zoom) * x;
     } 
-    f_temp = (fdf_info->color_info->finish_color>>8)&(BITMASK);//直接書き込んで演算すると負にならなかった
-    s_temp = (fdf_info->color_info->start_color>>8)&(BITMASK);
-    if((f_temp - s_temp)/zoom == 0)
-        fdf_info->color_info->g_step = bresenham_color_green(fdf_info, x);
+    if((fdf_info->color_info->blue_progress->color_sf_diff)/zoom == 0)
+        fdf_info->color_info->blue_progress->step = bresenham_color_blue(fdf_info->color_info->blue_progress, x, fdf_info->zoom);
     else{
-        fdf_info->color_info->g_step = ((f_temp - s_temp)/zoom) * x;
-    } 
-    f_temp = (fdf_info->color_info->finish_color)&(BITMASK);//直接書き込んで演算すると負にならなかった
-    s_temp = (fdf_info->color_info->start_color)&(BITMASK);
-    if((f_temp - s_temp)/zoom == 0)
-        fdf_info->color_info->b_step = bresenham_color_blue(fdf_info, x);
-    else{
-        fdf_info->color_info->b_step = ((f_temp - s_temp)/zoom) * x;
+        fdf_info->color_info->blue_progress->step = ((fdf_info->color_info->blue_progress->color_sf_diff)/zoom) * x;
     } 
 }
 
 
 void get_start_finish_color_of_each_point(t_fdf *fdf_info)
 {
-
+    int zoom;
+    zoom = fdf_info->zoom;
      if(fdf_info->coordinate->decreace_flag == 0)
     {
         fdf_info->color_info->start_color = fdf_info->color_info->color_min;
@@ -175,19 +165,67 @@ void get_start_finish_color_of_each_point(t_fdf *fdf_info)
         fdf_info->color_info->start_color = fdf_info->color_info->color_max;
         fdf_info->color_info->finish_color = fdf_info->color_info->color_min;
     }
-    printf("start_color : %x → finish_color : %x\n", fdf_info->color_info->start_color, fdf_info->color_info->finish_color);
+    fdf_info->color_info->red_progress->f_temp = (fdf_info->color_info->finish_color >>16)&(BITMASK);//直接書き込んで演算すると負にならなかった
+    fdf_info->color_info->red_progress->s_temp = (fdf_info->color_info->start_color >>16)&(BITMASK);
+    fdf_info->color_info->red_progress->color_sf_diff = fdf_info->color_info->red_progress->f_temp - fdf_info->color_info->red_progress->s_temp;
+    fdf_info->color_info->red_progress->color_sf_diff_div_zoom = fdf_info->color_info->red_progress->color_sf_diff/zoom;
+    printf("zoomで割ったが文字化けしてないか red %d\n",  fdf_info->color_info->red_progress->color_sf_diff_div_zoom);
+    fdf_info->color_info->green_progress->f_temp = (fdf_info->color_info->finish_color >>8)&(BITMASK);//直接書き込んで演算すると負にならなかった
+    fdf_info->color_info->green_progress->s_temp = (fdf_info->color_info->start_color >>8)&(BITMASK);
+    fdf_info->color_info->green_progress->color_sf_diff = fdf_info->color_info->green_progress->f_temp - fdf_info->color_info->green_progress->s_temp;
+    fdf_info->color_info->green_progress->color_sf_diff_div_zoom = fdf_info->color_info->green_progress->color_sf_diff/zoom;
+    printf("zoomで割ったが文字化けしてないか green %d\n",  fdf_info->color_info->green_progress->color_sf_diff_div_zoom);
+
+    fdf_info->color_info->blue_progress->f_temp = (fdf_info->color_info->finish_color)&(BITMASK);//直接書き込んで演算すると負にならなかった
+    fdf_info->color_info->blue_progress->s_temp = (fdf_info->color_info->start_color)&(BITMASK);
+    fdf_info->color_info->red_progress->color_sf_diff = fdf_info->color_info->red_progress->f_temp - fdf_info->color_info->blue_progress->s_temp;
+    fdf_info->color_info->red_progress->color_sf_diff_div_zoom = fdf_info->color_info->red_progress->color_sf_diff/zoom;
+    printf("zoomで割ったが文字化けしてないか blue %d\n",  fdf_info->color_info->blue_progress->color_sf_diff_div_zoom);
+
+    printf("--------------------------------------------------------------------------");
 }
 
+void red_progress_init(t_rgb_color_red *red_progress)
+{
+    red_progress->step = 0;
+    red_progress->delta_color = 0;
+    red_progress->diff = 0;
+    red_progress->xi = 0;
+    red_progress->bresenham_e = 0;
+}
+
+void green_progress_init(t_rgb_color_green *green_progress)
+{
+    green_progress->step = 0;
+    green_progress->delta_color = 0;
+    green_progress->diff = 0;
+    green_progress->xi = 0;
+    green_progress->bresenham_e = 0;
+}
+
+void blue_progress_init(t_rgb_color_blue *blue_progress)
+{
+    blue_progress->step = 0;
+    blue_progress->delta_color = 0;
+    blue_progress->diff = 0;
+    blue_progress->xi = 0;
+    blue_progress->bresenham_e = 0;
+}
 void color_properties_init(t_fdf *fdf_info)
 {
+
     fdf_info->color_info->color = 0;
 	fdf_info->color_info->color_max = 0;
 	fdf_info->color_info->color_min = 0;
 	fdf_info->color_info->start_color = 0;
 	fdf_info->color_info->finish_color = 0;
-	fdf_info->color_info->r_bresenham_e = 0;
-	fdf_info->color_info->g_bresenham_e = 0;
-	fdf_info->color_info->b_bresenham_e = 0;
+    fdf_info->color_info->red_progress = (t_rgb_color_red *)malloc(sizeof(t_rgb_color_red));
+    fdf_info->color_info->green_progress = (t_rgb_color_green *)malloc(sizeof(t_rgb_color_green));
+    fdf_info->color_info->blue_progress = (t_rgb_color_blue *)malloc(sizeof(t_rgb_color_blue));
+    red_progress_init(fdf_info->color_info->red_progress);
+    green_progress_init(fdf_info->color_info->green_progress);
+    blue_progress_init(fdf_info->color_info->blue_progress);
+
 
 }
 
