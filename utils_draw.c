@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:00:13 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 15:45:34 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/13 18:01:19 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,12 @@ void	coordinate_store_y(t_coordinate *coordinate, int x, int y)
 	coordinate->y_start = y;
 	coordinate->x_finish = x;
 	coordinate->y_finish = y + 1;
+}
+
+void	inconsistency_num_columns(char **sp_row, size_t width, size_t i,
+		char *row)
+{
+	if (ft_split_len(sp_row) != width)
+		error_fdf_format(i, width);
+	free(row);
 }

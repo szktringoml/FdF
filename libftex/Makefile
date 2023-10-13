@@ -6,7 +6,7 @@
 #    By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/02 13:12:57 by kousuzuk          #+#    #+#              #
-#    Updated: 2023/10/09 17:57:51 by kousuzuk         ###   ########.fr        #
+#    Updated: 2023/10/13 17:43:06 by kousuzuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ SRCS		= ft_isalpha.c \
 			  getnextline/get_next_line_utils.c \
 			  ft_abs_i.c \
 			  ft_isverify_file_extension.c \
-			  ft_split_memory_cleaner.c
+			  ft_split_memory_cleaner.c \
+			  ft_split_len.c
 
 OBJS		= ${SRCS:.c=.o}
 NAME		= libft.a

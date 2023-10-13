@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:45 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:42:24 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:47:09 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	get_fdfmap_generate_array(int fd, int **z_values, size_t width,
 		i = 0;
 		row = get_next_line(fd);
 		sp_row = ft_split(row, ' ');
-		free(row);
+		inconsistency_num_columns(sp_row, width, i, row);
 		row_values = malloc(sizeof(int) * width);
 		while (sp_row[i] && i < width)
 		{

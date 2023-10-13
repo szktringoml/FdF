@@ -6,7 +6,7 @@
 #    By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 16:07:31 by kousuzuk          #+#    #+#              #
-#    Updated: 2023/10/09 17:26:58 by kousuzuk         ###   ########.fr        #
+#    Updated: 2023/10/13 17:53:10 by kousuzuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,26 +27,26 @@ MLX = minilibx_macos/libmlx.a
 CC	= cc
 CFLAGS = -Wall -Wextra -Werror
 
-all: $(LIBFT) ${NAME} $(MLX) ;
+all: ${NAME} ${MLX} ;
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c -g $< -o $@
+${OBJS}: ${SRCS}
+	${CC} ${CFLAGS} -c $< -o $@
 
 #gcc *.c libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
-${NAME}: $(LIBFT) ${OBJS}
-	$(CC) $(CFLAGS) -c $(SRCS)
-	${CC} $(CFLAGS) -o $@ $(SRCS) $(LIBFT) $(MLX) -framework OpenGL -framework AppKit 
+${NAME}: ${LIBFT} ${OBJS}
+	${CC} ${CFLAGS} -c ${SRCS}
+	${CC} ${CFLAGS} -o $@ ${SRCS} ${LIBFT} ${MLX} -framework OpenGL -framework AppKit 
 
 
-$(LIBFT):
+${LIBFT}:
 	make -C libftex
 
-$(MLX):
+${MLX}:
 	make -C minilibx_macos
 
 clean: 
 	make fclean -C libftex
-	rm -rf $(LIBFT)
+	rm -rf ${LIBFT}
 	rm -rf ${OBJS}
 
 fclean: clean

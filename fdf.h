@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 18:48:15 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/13 18:01:28 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ void				error_read(int read_status);
 void				error_malloc(void);
 
 void				error_fdf_format(int i, int width);
+
+void				inconsistency_num_columns(char **sp_row, size_t width,
+						size_t i, char *row);
 
 void				coordinate_init(t_coordinate *coordinate);
 
