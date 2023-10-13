@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 18:17:02 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:27:48 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_rgb_color_red
 	int s_temp;
     int f_temp;
 	int				color_sf_diff;
-	int				color_sf_diff_div_zoom;
+	int				color_sf_diff_div_zoom;\
 
 	int				step;
 	int 			delta_color;
@@ -117,6 +117,7 @@ typedef struct s_color
 	int 				color_min;
 	int 				start_color;
 	int 				finish_color;
+	int					put_pixel_cnt_in_this_line;
 	t_rgb_color_red		*red_progress;
 	t_rgb_color_green	*green_progress;
 	t_rgb_color_blue	*blue_progress;

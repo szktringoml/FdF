@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:45 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 15:12:29 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:02:25 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,15 @@ size_t	get_fdfwidth(char *filename)
 	return (width);
 }
 
+size_t num_cnt(char **sp_row)
+{
+	size_t i;
+	i = 0;
+	while(sp_row[i])
+		i++;
+	return i;
+}
+
 void	get_fdfmap_generate_array(t_fdf *fdf_info, int fd, int **z_values, size_t width,
 		size_t height)
 {
@@ -91,6 +100,10 @@ void	get_fdfmap_generate_array(t_fdf *fdf_info, int fd, int **z_values, size_t w
 		i = 0;
 		row = get_next_line(fd);
 		sp_row = ft_split(row, ' ');
+		if(num_cnt(sp_row) != width){
+			ft_split_memory_cleaner(num_cnt(sp_row), sp_row);
+			error_fdf_format(num_cnt(sp_row), width);
+		}
 		free(row);
 		row_values = malloc(sizeof(int) * width);
 		if(row_values == NULL)

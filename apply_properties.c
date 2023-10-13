@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:09 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 11:23:24 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:28:35 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	apply_properties_to_one_line_points(t_fdf *fdf_info)
 		&(fdf_info->coordinate->y_finish),
 		fdf_info->coordinate->z_finish);
 	get_color_range_in_this_line(fdf_info);
+	fdf_info->color_info->put_pixel_cnt_in_this_line = 0;
 	d = ft_abs_i(2 * (fdf_info->coordinate->y_finish
 				- fdf_info->coordinate->y_start));
 	dx = ft_abs_i(fdf_info->coordinate->x_finish

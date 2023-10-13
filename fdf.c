@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 18:35:35 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:10:02 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	deal_key(int key, t_fdf *fdf_info)
 {
 	if (fdf_info == NULL)
 		return (0);
-	printf("key = %i\n", key);
 	if (key == PLUS || key == MINUS)
 		zoom_map(fdf_info, key);
 	if (key == ALLOW_TOP || key == ALLOW_RIGHT || key == ALLOW_BOTTOM
@@ -56,15 +55,10 @@ int	close_window(t_fdf *fdf_info)
 	return (0);
 }
 
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q fdf");
-// }
-
 void	fdf_info_init(t_fdf *fdf_info)
 {
-	fdf_info->zoom = 30;
-	fdf_info->shift_x = 1001;
+	fdf_info->zoom = 10;
+	fdf_info->shift_x = 300;
 	fdf_info->shift_y = 150;
 	fdf_info->mlx_ptr = mlx_init();
 	fdf_info->win_ptr = mlx_new_window(fdf_info->mlx_ptr, WIDTH, HEIGHT, "FDF");
@@ -77,6 +71,12 @@ void	fdf_info_init(t_fdf *fdf_info)
 
 	coordinate_init(fdf_info->coordinate);
 }
+
+__attribute__((destructor)) static void destructor()
+{
+	system("leaks -q fdf");
+}
+
 
 int	main(int argc, char **argv)
 {
