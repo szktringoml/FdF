@@ -38,6 +38,7 @@ int	deal_key(int key, t_fdf *fdf_info)
 	if (key == ALLOW_TOP || key == ALLOW_RIGHT || key == ALLOW_BOTTOM
 		|| key == ALLOW_LEFT)
 		shift_map(fdf_info, key);
+	mlx_destroy_image(fdf_info->mlx_ptr, fdf_info->img_ptr);
 	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
 	fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr,
@@ -50,6 +51,8 @@ int	deal_key(int key, t_fdf *fdf_info)
 
 int	close_window(t_fdf *fdf_info)
 {
+	mlx_destroy_image(fdf_info->mlx_ptr, fdf_info->img_ptr);
+	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	mlx_destroy_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	exit(SUCCESS_EXIT);
 	return (0);
