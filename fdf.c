@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/13 17:40:58 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:15:05 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,17 @@ int	deal_key(int key, t_fdf *fdf_info)
 		shift_map(fdf_info, key);
 	if (key == ESC)
 		close_window(fdf_info);
+	mlx_destroy_image(fdf_info->mlx_ptr, fdf_info->img_ptr);
 	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
-	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
-	fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr,
-			&fdf_info->bit_per_pixel,
-			&fdf_info->size_line,
-			&fdf_info->endian);
+	image_init(fdf_info);
 	draw(fdf_info);
 	return (0);
 }
 
 int	close_window(t_fdf *fdf_info)
 {
+	mlx_destroy_image(fdf_info->mlx_ptr, fdf_info->img_ptr);
+	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	mlx_destroy_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	exit(SUCCESS_EXIT);
 	return (0);
@@ -62,19 +61,34 @@ int	close_window(t_fdf *fdf_info)
 // 	system("leaks -q fdf");
 // }
 
+void	image_init(t_fdf *fdf_info)
+{
+	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
+	if (!fdf_info->img_ptr)
+		error_malloc();
+	fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr,
+			&fdf_info->bit_per_pixel,
+			&fdf_info->size_line,
+			&fdf_info->endian);
+	if (!fdf_info->data_addr)
+		error_malloc();
+}
+
 void	fdf_info_init(t_fdf *fdf_info)
 {
 	fdf_info->zoom = 30;
 	fdf_info->shift_x = 1000;
 	fdf_info->shift_y = 150;
 	fdf_info->mlx_ptr = mlx_init();
+	if (!fdf_info->mlx_ptr)
+		error_malloc();
 	fdf_info->win_ptr = mlx_new_window(fdf_info->mlx_ptr, WIDTH, HEIGHT, "FDF");
-	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
-	fdf_info->data_addr = mlx_get_data_addr(fdf_info->img_ptr,
-			&fdf_info->bit_per_pixel,
-			&fdf_info->size_line,
-			&fdf_info->endian);
+	if (!fdf_info->win_ptr)
+		error_malloc();
+	image_init(fdf_info);
 	fdf_info->coordinate = (t_coordinate *)malloc(sizeof(t_coordinate));
+	if (!fdf_info->coordinate)
+		error_malloc();
 	coordinate_init(fdf_info->coordinate);
 }
 

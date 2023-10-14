@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/13 18:01:28 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:04:29 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ void				error_fdf_format(int i, int width);
 
 void				inconsistency_num_columns(char **sp_row, size_t width,
 						size_t i, char *row);
+
+void				image_init(t_fdf *fdf_info);
 
 void				coordinate_init(t_coordinate *coordinate);
 
