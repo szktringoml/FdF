@@ -16,8 +16,7 @@ SRCS = fdf.c \
 	   utils_draw.c \
 	   error_message.c \
 	   apply_properties.c \
-	   operations.c \
-	   color.c
+	   operations.c color.c routation.c
 	
 
 OBJS = ${SRCS:.c=.o}

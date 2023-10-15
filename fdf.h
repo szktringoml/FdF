@@ -22,16 +22,26 @@
 # include <string.h>
 # include <unistd.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 960
+# define HEIGHT 720
 
-# define PLUS 24
+// # define PLUS 24
+// # define MINUS 27
+# define PLUS 41
 # define MINUS 27
 
 # define ALLOW_TOP 126
 # define ALLOW_RIGHT 124
 # define ALLOW_BOTTOM 125
 # define ALLOW_LEFT 123
+
+# define X 7
+# define Y 16
+# define Z 6
+
+#define SPACE 49
+
+# define ESC 53
 
 # define BAD_EXIT 1
 # define SUCCESS_EXIT 0
@@ -144,6 +154,9 @@ typedef struct s_fdf
 	size_t			zoom;
 	size_t 			shift_x;
 	size_t 		shift_y;
+	float		x_routation_theta;
+	float		y_routation_theta;
+	float		z_routation_theta;
 }					t_fdf;
 
 size_t				get_fdfheight(char *filename);
@@ -207,5 +220,15 @@ void 	get_color_range_in_this_line(t_fdf *fdf_info);
 void    get_each_rgbcolor_step(t_fdf *fdf_info, int x);
 
 int calc_rgb_hexa(t_fdf *fdf_info);
+
+void	routaion_map(t_fdf *fdf_info, int key);
+
+void	routation_x(t_fdf *fdf_info, int *x, int *y, int *z);
+
+void	routation_y(t_fdf *fdf_info, int *x, int *y, int *z);
+
+void	routation_z(t_fdf *fdf_info, int *x, int *y, int *z);
+
+void	init_map(t_fdf *fdf_info);
 
 #endif

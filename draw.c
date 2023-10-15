@@ -40,7 +40,7 @@ void	put_pixel_hub(t_fdf *fdf_info, int x, int y)
 		//rgbそれぞれがxのときにどのようにステップするか
 		get_each_rgbcolor_step(fdf_info, fdf_info->color_info->put_pixel_cnt_in_this_line);
 		fdf_info->color_info->color = calc_rgb_hexa(fdf_info);
-		printf("gradation color = %x\n", fdf_info->color_info->color);
+		// printf("gradation color = %x\n", fdf_info->color_info->color);
 		
 	}
 
@@ -63,6 +63,10 @@ void	put_pixel_hub(t_fdf *fdf_info, int x, int y)
 		&& fdf_info->coordinate->y_start > fdf_info->coordinate->y_finish)
 		put_pixel(fdf_info, fdf_info->coordinate->x_start + x
 			+ fdf_info->shift_x, fdf_info->coordinate->y_start - y
+			+ fdf_info->shift_y, fdf_info->color_info->color);
+	else if(fdf_info->coordinate->decreace_flag != -1) 
+		put_pixel(fdf_info, fdf_info->coordinate->x_start + x
+			+ fdf_info->shift_x, fdf_info->coordinate->y_start + y
 			+ fdf_info->shift_y, fdf_info->color_info->color);
 	if(fdf_info->color_info->put_pixel_cnt_in_this_line < (int)fdf_info->zoom)
 		fdf_info->color_info->put_pixel_cnt_in_this_line++;
@@ -107,7 +111,7 @@ void	draw(t_fdf *fdf_info)
 		x = 0;
 		while (x < fdf_info->width)
 		{
-			printf("========================(y = %zu, x = %zu)========================\n", y, x);
+			// printf("========================(y = %zu, x = %zu)========================\n", y, x);
 			if (x < fdf_info->width - 1)
 			{
 				coordinate_store_x(fdf_info->coordinate, x, y);

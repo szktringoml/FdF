@@ -31,6 +31,7 @@
 
 int	deal_key(int key, t_fdf *fdf_info)
 {
+	printf("%d\n", key);
 	if (fdf_info == NULL)
 		return (0);
 	if (key == PLUS || key == MINUS)
@@ -38,6 +39,12 @@ int	deal_key(int key, t_fdf *fdf_info)
 	if (key == ALLOW_TOP || key == ALLOW_RIGHT || key == ALLOW_BOTTOM
 		|| key == ALLOW_LEFT)
 		shift_map(fdf_info, key);
+	if(key == ESC)
+		close_window(fdf_info);
+	if(key == X || key == Y || key == Z)
+		routaion_map(fdf_info, key);
+	if(key == SPACE)
+		init_map(fdf_info);
 	mlx_destroy_image(fdf_info->mlx_ptr, fdf_info->img_ptr);
 	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
@@ -63,6 +70,9 @@ void	fdf_info_init(t_fdf *fdf_info)
 	fdf_info->zoom = 10;
 	fdf_info->shift_x = 300;
 	fdf_info->shift_y = 150;
+	fdf_info->x_routation_theta = 0;
+	fdf_info->y_routation_theta = 0;
+	fdf_info->z_routation_theta = 0;
 	fdf_info->mlx_ptr = mlx_init();
 	fdf_info->win_ptr = mlx_new_window(fdf_info->mlx_ptr, WIDTH, HEIGHT, "FDF");
 	fdf_info->img_ptr = mlx_new_image(fdf_info->mlx_ptr, WIDTH, HEIGHT);
@@ -75,10 +85,10 @@ void	fdf_info_init(t_fdf *fdf_info)
 	coordinate_init(fdf_info->coordinate);
 }
 
-__attribute__((destructor)) static void destructor()
-{
-	system("leaks -q fdf");
-}
+// __attribute__((destructor)) static void destructor()
+// {
+// 	system("leaks -q fdf");
+// }
 
 
 int	main(int argc, char **argv)

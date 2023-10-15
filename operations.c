@@ -12,6 +12,16 @@
 
 #include "fdf.h"
 
+void	init_map(t_fdf *fdf_info)
+{
+	fdf_info->zoom = 10;
+	fdf_info->shift_x = 300;
+	fdf_info->shift_y = 150;
+	fdf_info->x_routation_theta = 0;
+	fdf_info->y_routation_theta = 0;
+	fdf_info->z_routation_theta = 0;
+}
+
 void	shift_map(t_fdf *fdf_info, int key)
 {
 	if (key == ALLOW_TOP)
@@ -30,4 +40,29 @@ void	zoom_map(t_fdf *fdf_info, int key)
 		fdf_info->zoom += 10;
 	if (key == MINUS && fdf_info->zoom > 10)
 		fdf_info->zoom -= 10;
+}
+
+void	routaion_map(t_fdf *fdf_info, int key)
+{
+	if(key == X)
+	{
+		if(fdf_info->x_routation_theta > 5.5)
+			fdf_info->x_routation_theta = 0;
+		else
+			fdf_info->x_routation_theta += 0.8;
+	}
+	if(key == Y)
+	{
+		if(fdf_info->y_routation_theta > 5.5)
+			fdf_info->y_routation_theta = 0;
+		else
+			fdf_info->y_routation_theta += 0.8;
+	}
+	if(key == Z)
+	{
+		if(fdf_info->z_routation_theta > 5.5)
+			fdf_info->z_routation_theta = 0;
+		else
+			fdf_info->z_routation_theta += 0.8;
+	}
 }

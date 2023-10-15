@@ -203,8 +203,8 @@ void get_start_finish_color_of_each_point(t_fdf *fdf_info)
     // }
     // else
     fdf_info->color_info->blue_progress->color_sf_diff_div_zoom = fdf_info->color_info->blue_progress->color_sf_diff/zoom;
-    printf("colorのdiff r = %d g = %d, b = %d\n",  fdf_info->color_info->red_progress->color_sf_diff,fdf_info->color_info->green_progress->color_sf_diff,fdf_info->color_info->blue_progress->color_sf_diff);
-    printf("zoomで割ったがオーバーフローしてないか r = %d g = %d, b = %d\n",  fdf_info->color_info->red_progress->color_sf_diff_div_zoom,fdf_info->color_info->green_progress->color_sf_diff_div_zoom,fdf_info->color_info->blue_progress->color_sf_diff_div_zoom);
+    // printf("colorのdiff r = %d g = %d, b = %d\n",  fdf_info->color_info->red_progress->color_sf_diff,fdf_info->color_info->green_progress->color_sf_diff,fdf_info->color_info->blue_progress->color_sf_diff);
+    // printf("zoomで割ったがオーバーフローしてないか r = %d g = %d, b = %d\n",  fdf_info->color_info->red_progress->color_sf_diff_div_zoom,fdf_info->color_info->green_progress->color_sf_diff_div_zoom,fdf_info->color_info->blue_progress->color_sf_diff_div_zoom);
 
     // printf("--------------------------------------------------------------------------\n");
 }
@@ -243,14 +243,18 @@ void color_properties_init(t_fdf *fdf_info)
 	fdf_info->color_info->color_min = 0;
 	fdf_info->color_info->start_color = 0;
 	fdf_info->color_info->finish_color = 0;
+    if (fdf_info->color_info->red_progress != NULL)
+        free(fdf_info->color_info->red_progress);
+    if (fdf_info->color_info->green_progress != NULL)
+        free(fdf_info->color_info->green_progress);
+    if (fdf_info->color_info->blue_progress != NULL)
+        free(fdf_info->color_info->blue_progress);
     fdf_info->color_info->red_progress = (t_rgb_color_red *)malloc(sizeof(t_rgb_color_red));
     fdf_info->color_info->green_progress = (t_rgb_color_green *)malloc(sizeof(t_rgb_color_green));
     fdf_info->color_info->blue_progress = (t_rgb_color_blue *)malloc(sizeof(t_rgb_color_blue));
     red_progress_init(fdf_info->color_info->red_progress);
     green_progress_init(fdf_info->color_info->green_progress);
     blue_progress_init(fdf_info->color_info->blue_progress);
-
-
 }
 
 void	get_color_range_in_this_line(t_fdf *fdf_info)
@@ -262,8 +266,8 @@ void	get_color_range_in_this_line(t_fdf *fdf_info)
     get_min_max_z(fdf_info, &minz, &maxz);
     get_color_min_max_in_this_line(fdf_info, minz, &fdf_info->color_info->color_min);
     get_color_min_max_in_this_line(fdf_info, maxz, &fdf_info->color_info->color_max);
-    printf("newline -------------------------------------------------------------------\n");
-    printf("%x → %xを目指す\n", fdf_info->color_info->color_min, fdf_info->color_info->color_max);
+    // printf("newline -------------------------------------------------------------------\n");
+    // printf("%x → %xを目指す\n", fdf_info->color_info->color_min, fdf_info->color_info->color_max);
     get_start_finish_color_of_each_point(fdf_info);
 }
 
