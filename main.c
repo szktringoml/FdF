@@ -6,9 +6,38 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:10:30 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/09 17:11:50 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:45:14 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "fdf.h"
+
+// __attribute__((destructor)) static void destructor()
+// {
+// 	system("leaks -q fdf");
+// }
+
+int	main(int argc, char **argv)
+{
+	t_fdf	*fdf_info;
+
+	if (argc == 2)
+	{
+		fdf_info = (t_fdf *)malloc(sizeof(t_fdf));
+		error_filename(argv[1]);
+		read_fdf(&fdf_info, argv[1]);
+		fdf_info_init(fdf_info);
+		draw(fdf_info);
+		mlx_key_hook(fdf_info->win_ptr, deal_key, fdf_info);
+		mlx_hook(fdf_info->win_ptr, 17, 1L << 17, close_window, fdf_info);
+		mlx_loop(fdf_info->mlx_ptr);
+	}
+	else
+	{
+		write(2, NON_FILENAME_ARGUMENT, NON_FILENAME_ARGUMENT_CC);
+		exit(BAD_EXIT);
+	}
+}
 
 // int	main(void)
 // {

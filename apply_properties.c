@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:09 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/11 18:40:13 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:41:57 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,40 @@ void	get_z_color(t_fdf *fdf_info, int z_start)
 		fdf_info->color = 0xffffff;
 }
 
+void	apply_routation(t_fdf *fdf_info)
+{
+	routation_x(fdf_info, &(fdf_info->coordinate->x_start),
+		&(fdf_info->coordinate->y_start), &fdf_info->coordinate->z_start);
+	routation_x(fdf_info, &(fdf_info->coordinate->x_finish),
+		&(fdf_info->coordinate->y_finish), &fdf_info->coordinate->z_finish);
+	routation_y(fdf_info, &(fdf_info->coordinate->x_start),
+		&(fdf_info->coordinate->y_start), &fdf_info->coordinate->z_start);
+	routation_y(fdf_info, &(fdf_info->coordinate->x_finish),
+		&(fdf_info->coordinate->y_finish), &fdf_info->coordinate->z_finish);
+	routation_z(fdf_info, &(fdf_info->coordinate->x_start),
+		&(fdf_info->coordinate->y_start), &fdf_info->coordinate->z_start);
+	routation_z(fdf_info, &(fdf_info->coordinate->x_finish),
+		&(fdf_info->coordinate->y_finish), &fdf_info->coordinate->z_finish);
+}
+
 void	apply_properties_to_one_line_points(t_fdf *fdf_info)
 {
-	int	z_start;
-	int	z_finish;
 	int	d;
 	int	dx;
 
-	z_start = fdf_info->z_values[fdf_info->coordinate->y_start]
-	[fdf_info->coordinate->x_start];
-	z_finish = fdf_info->z_values[fdf_info->coordinate->y_finish]
-	[fdf_info->coordinate->x_finish];
-	get_z_color(fdf_info, z_start);
+	fdf_info->coordinate->z_start = fdf_info->z_values
+	[fdf_info->coordinate->y_start][fdf_info->coordinate->x_start];
+	fdf_info->coordinate->z_finish = fdf_info->z_values
+	[fdf_info->coordinate->y_finish][fdf_info->coordinate->x_finish];
+	get_z_color(fdf_info, fdf_info->coordinate->z_start);
 	apply_zoom_to_one_line_points(fdf_info);
 	apply_degrees(&(fdf_info->coordinate->x_start),
 		&(fdf_info->coordinate->y_start),
-		z_start);
+		fdf_info->coordinate->z_start);
 	apply_degrees(&(fdf_info->coordinate->x_finish),
 		&(fdf_info->coordinate->y_finish),
-		z_finish);
+		fdf_info->coordinate->z_finish);
+	apply_routation(fdf_info);
 	d = ft_abs_i(2 * (fdf_info->coordinate->y_finish
 				- fdf_info->coordinate->y_start));
 	dx = ft_abs_i(fdf_info->coordinate->x_finish

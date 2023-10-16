@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:02:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/14 17:04:29 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:32:22 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@
 # define ALLOW_RIGHT 124
 # define ALLOW_BOTTOM 125
 # define ALLOW_LEFT 123
+
+# define X 7
+# define Y 16
+# define Z 6
+
+# define SPACE 49
 
 # define BAD_EXIT 1
 # define SUCCESS_EXIT 0
@@ -64,6 +70,8 @@ typedef struct s_coordinate
 	int				y_start;
 	int				x_finish;
 	int				y_finish;
+	int				z_start;
+	int				z_finish;
 
 }					t_coordinate;
 
@@ -84,6 +92,9 @@ typedef struct s_fdf
 	size_t			zoom;
 	size_t			shift_x;
 	size_t			shift_y;
+	float			x_routation_theta;
+	float			y_routation_theta;
+	float			z_routation_theta;
 }					t_fdf;
 
 size_t				get_fdfheight(char *filename);
@@ -127,6 +138,8 @@ void				coordinate_store_y(t_coordinate *coordinate, int x, int y);
 
 void				apply_degrees(int *x, int *y, int z);
 
+void				apply_routation(t_fdf *fdf_info);
+
 void				apply_properties_to_point(t_fdf *fdf_info);
 
 void				apply_zoom_to_one_line_points(t_fdf *fdf_info);
@@ -139,8 +152,18 @@ void				put_pixel_hub(t_fdf *fdf_info, int x, int y);
 
 void				draw(t_fdf *fdf_info);
 
+void				init_map(t_fdf *fdf_info);
+
 void				shift_map(t_fdf *fdf_info, int key);
 
 void				zoom_map(t_fdf *fdf_info, int key);
+
+void				routaion_map(t_fdf *fdf_info, int key);
+
+void				routation_x(t_fdf *fdf_info, int *x, int *y, int *z);
+
+void				routation_y(t_fdf *fdf_info, int *x, int *y, int *z);
+
+void				routation_z(t_fdf *fdf_info, int *x, int *y, int *z);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 16:07:31 by kousuzuk          #+#    #+#              #
-#    Updated: 2023/10/13 17:53:10 by kousuzuk         ###   ########.fr        #
+#    Updated: 2023/10/16 13:38:45 by kousuzuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ SRCS = fdf.c \
 	   utils_draw.c \
 	   error_message.c \
 	   apply_properties.c \
-	   operations.c
+	   operations.c \
+	   routation.c \
+	   main.c
 	
 
 OBJS = ${SRCS:.c=.o}

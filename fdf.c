@@ -6,7 +6,7 @@
 /*   By: kousuzuk <kousuzuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:26:59 by kousuzuk          #+#    #+#             */
-/*   Updated: 2023/10/14 17:15:05 by kousuzuk         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:38:29 by kousuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ int	deal_key(int key, t_fdf *fdf_info)
 		shift_map(fdf_info, key);
 	if (key == ESC)
 		close_window(fdf_info);
+	if (key == X || key == Y || key == Z)
+		routaion_map(fdf_info, key);
+	if (key == SPACE)
+		init_map(fdf_info);
 	mlx_destroy_image(fdf_info->mlx_ptr, fdf_info->img_ptr);
 	mlx_clear_window(fdf_info->mlx_ptr, fdf_info->win_ptr);
 	image_init(fdf_info);
@@ -55,11 +59,6 @@ int	close_window(t_fdf *fdf_info)
 	exit(SUCCESS_EXIT);
 	return (0);
 }
-
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q fdf");
-// }
 
 void	image_init(t_fdf *fdf_info)
 {
@@ -79,6 +78,9 @@ void	fdf_info_init(t_fdf *fdf_info)
 	fdf_info->zoom = 30;
 	fdf_info->shift_x = 1000;
 	fdf_info->shift_y = 150;
+	fdf_info->x_routation_theta = 0;
+	fdf_info->y_routation_theta = 0;
+	fdf_info->z_routation_theta = 0;
 	fdf_info->mlx_ptr = mlx_init();
 	if (!fdf_info->mlx_ptr)
 		error_malloc();
@@ -90,26 +92,4 @@ void	fdf_info_init(t_fdf *fdf_info)
 	if (!fdf_info->coordinate)
 		error_malloc();
 	coordinate_init(fdf_info->coordinate);
-}
-
-int	main(int argc, char **argv)
-{
-	t_fdf	*fdf_info;
-
-	if (argc == 2)
-	{
-		fdf_info = (t_fdf *)malloc(sizeof(t_fdf));
-		error_filename(argv[1]);
-		read_fdf(&fdf_info, argv[1]);
-		fdf_info_init(fdf_info);
-		draw(fdf_info);
-		mlx_key_hook(fdf_info->win_ptr, deal_key, fdf_info);
-		mlx_hook(fdf_info->win_ptr, 17, 1L << 17, close_window, fdf_info);
-		mlx_loop(fdf_info->mlx_ptr);
-	}
-	else
-	{
-		write(2, NON_FILENAME_ARGUMENT, NON_FILENAME_ARGUMENT_CC);
-		exit(BAD_EXIT);
-	}
 }
